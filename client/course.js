@@ -18,20 +18,16 @@ Template.course.helpers({
   },
   
   chapters: function () {
-    return Modules.find({
-      parentId: Session.get('currentCourse')
-    });
+    return Modules.find({ parentId: Session.get('currentCourse'), module_type: 'am_chapter' });
   },
   
   anySections: function () {
-    var secs = Modules.find({parentId: this._id});
+    var secs = Modules.find({ parentId: this._id, module_type: 'am_section' });
     return secs.count() > 0;
   },
   
   sections: function () {
-    return Modules.find({
-      parentId: this._id
-    });
+    return Modules.find({ parentId: this._id, module_type: 'am_section' });
   },
   
   selectedChapter: function (i, e) {
