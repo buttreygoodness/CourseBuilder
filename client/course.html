@@ -1,5 +1,8 @@
 <template name="course">
   <div class="container">
+    {{#if showCreateSectionDialog}}
+      {{> createSectionDialog}}
+    {{/if}}
     {{#if showCreateChapterDialog}}
       {{> createChapterDialog}}
     {{/if}}
@@ -24,6 +27,11 @@
         {{#if anyChapters}}
         {{#each chapters}}
           <h2 class="chapter {{_id}} {{#if selectedChapter}}selected{{/if}}">{{title}} {{#if selectedChapter}}<small>{{_id}}</small> {{> chapterControls}}{{/if}}</h2>
+          {{#if anySections}}
+            {{#each sections}}
+            <h3>{{title}} <small>{{_id}}</small></h3>
+            {{/each}}
+          {{/if}}
         {{/each}}
         {{else}}
         <div class="well">
@@ -38,13 +46,15 @@
 </template>
 
 <template name="courseControls">
+
   <a href="#" class="btn btn-small createChapter">Add Chapter</a>
-  <a href="#" class="btn btn-small">Add Section</a>
+  <a href="#" class="btn btn-small createSection">Add Section</a>
   <a href="#" class="btn btn-small">Add Block</a>
+
 </template>
 
 <template name="chapterControls">
-  <a href="#" class="btn btn-small">Add Section</a>
+  <a href="#" class="btn btn-small createSection">Add Section</a>
 </template>
 
 <!-- createChapterDialog template -->
@@ -70,6 +80,33 @@
     <div class="modal-footer">
       <a href="#" class="btn cancel">Cancel</a>
       <a href="#" class="btn btn-primary save">Add Chapter</a>
+    </div>
+  </div>
+</template>
+
+<!-- createSectionDialog template -->
+
+<template name="createSectionDialog">
+  <div class="mask"> </div>
+  <div class="modal">
+    <div class="modal-header">
+      <button type="button" class="close cancel">&times;</button>
+      <h3>Add Section</h3>
+    </div>
+
+    <div class="modal-body">
+      {{#if error}}
+        <div class="alert alert-error">{{error}}</div>
+      {{/if}}
+
+      <label>Title</label>
+      <input type="text" class="title span5">
+
+    </div>
+
+    <div class="modal-footer">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary save">Add Section</a>
     </div>
   </div>
 </template>

@@ -13,3 +13,7 @@
 #main {
   margin-top: 60px;
 }
+
+h2.chapter {
+  cursor: pointer;
+}
