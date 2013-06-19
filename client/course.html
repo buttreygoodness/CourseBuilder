@@ -7,7 +7,7 @@
     {{#with course}}
     <div class="row">
       <div class="span12">
-        <h1>{{title}} <small>{{_id}}</small></h1>
+        <h1>{{title}} <small>{{_id}}</small>  {{> courseControls}}</h1>
       </div>
     </div>
     <div class="row">
@@ -21,25 +21,30 @@
         </ul>
       </div>
       <div class="span9">
-        <div class="navbar">
-          <div class="navbar-inner">
-            <ul class="nav">
-              <li><a href="#" class="createChapter"><i class="icon-camera-retro icon-large"></i> Create Chapter</a></li>
-              <li><a href="#" class="createSection"><i class="icon-camera-retro icon-large"></i> Create Section</a></li>
-              <li><a href="#" class="createBlock"><i class="icon-camera-retro icon-large"></i> Create Block</a></li>
-            </ul>
-          </div>
-        </div>
         {{#if anyChapters}}
         {{#each chapters}}
-          <h2>{{title}} <small>{{_id}}</small></h2>
+          <h2 class="chapter {{_id}} {{#if selectedChapter}}selected{{/if}}">{{title}} {{#if selectedChapter}}<small>{{_id}}</small> {{> chapterControls}}{{/if}}</h2>
         {{/each}}
+        {{else}}
+        <div class="well">
+          Get started by adding some chapters.
+        </div>
         {{/if}}
       </div>
     </div>
     {{/with}}
     {{/if}}
   </div>
+</template>
+
+<template name="courseControls">
+  <a href="#" class="btn btn-small createChapter">Add Chapter</a>
+  <a href="#" class="btn btn-small">Add Section</a>
+  <a href="#" class="btn btn-small">Add Block</a>
+</template>
+
+<template name="chapterControls">
+  <a href="#" class="btn btn-small">Add Section</a>
 </template>
 
 <!-- createChapterDialog template -->

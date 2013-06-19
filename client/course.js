@@ -6,7 +6,7 @@ Template.course.helpers({
   },
   
   anyChapters: function () {
-    var chapters = Modules.find({ parentId: Session.get('currentCourse') });
+    var chapters = Modules.find({ parentId: Session.get('currentCourse'), module_type: 'am_chapter' });
     return chapters.count() > 0;
   },
   
@@ -16,14 +16,28 @@ Template.course.helpers({
     });
   },
   
+  selectedChapter: function (i, e) {
+    return this._id == Session.get('selectedChapter');
+  },
+  
   showCreateChapterDialog: function () {
     return Session.get('showCreateChapterDialog');
   }
 });
 
-Template.course.events({
+// courseControls template
+
+Template.courseControls.events({
   'click .createChapter': function (event, template) {
     Session.set('showCreateChapterDialog', true);
+  }
+});
+
+Template.course.events({
+  'click .chapter': function (event, template) {
+    $('.selected').removeClass('selected');
+    $(template.find('.' + this._id)).addClass('selected');
+    Session.set('selectedChapter', this._id);
   }
 });
 
@@ -43,6 +57,7 @@ Template.createChapterDialog.events({
         parentId: Session.get('currentCourse')
       }, function (error, chapter){
         if (! error) {
+          Session.set('selectedChapter', chapter);
           Session.set('showCreateChapterDialog', false);
         } else {
           console.log(error);

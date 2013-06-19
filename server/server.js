@@ -3,6 +3,5 @@ Meteor.publish('courses', function () {
 });
 
 Meteor.publish('modules', function () {
-  console.log(this);
   return Modules.find({owner: this.userId});
 });
