@@ -17,3 +17,11 @@
 h2.chapter {
   cursor: pointer;
 }
+
+h3 {
+  margin-left: 20px;
+}
+
+.block {
+  margin-left: 40px;
+}

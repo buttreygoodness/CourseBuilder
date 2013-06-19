@@ -6,6 +6,9 @@
     {{#if showCreateChapterDialog}}
       {{> createChapterDialog}}
     {{/if}}
+    {{#if showCreateBlockDialog}}
+      {{> createBlockDialog}}
+    {{/if}}
     {{#if course}}
     {{#with course}}
     <div class="row">
@@ -34,7 +37,15 @@
           <h2 class="chapter {{_id}} {{#if selectedChapter}}selected{{/if}}">{{title}} {{#if selectedChapter}}<small>{{_id}}</small> {{> chapterControls}}{{/if}}</h2>
           {{#if anySections}}
             {{#each sections}}
-            <h3>{{title}} <small>{{_id}}</small></h3>
+            <h3 class="section {{_id}} {{#if selectedSection}}selected{{/if}}">{{title}} {{#if selectedSection}}<small>{{_id}}</small> {{> sectionControls}}{{/if}}</h3>
+            {{#if anyBlocks}}
+              {{#each blocks}}
+              <div class="block">
+                <h4>{{title}}</h4>
+                <p><small>({{_id}})</small> {{body}}</p>
+              </div>
+              {{/each}}
+            {{/if}}
             {{/each}}
           {{/if}}
         {{/each}}
@@ -51,15 +62,18 @@
 </template>
 
 <template name="courseControls">
-
   <a href="#" class="btn btn-small createChapter">Add Chapter</a>
   <a href="#" class="btn btn-small createSection">Add Section</a>
   <a href="#" class="btn btn-small">Add Block</a>
-
 </template>
 
 <template name="chapterControls">
   <a href="#" class="btn btn-small createSection">Add Section</a>
+  <a href="#" class="btn btn-small createBlock">Add Block</a>
+</template>
+
+<template name="sectionControls">
+  <a href="#" class="btn btn-small createBlock">Add Block</a>
 </template>
 
 <!-- createChapterDialog template -->
@@ -112,6 +126,36 @@
     <div class="modal-footer">
       <a href="#" class="btn cancel">Cancel</a>
       <a href="#" class="btn btn-primary save">Add Section</a>
+    </div>
+  </div>
+</template>
+
+<!-- createBlockDialog template -->
+
+<template name="createBlockDialog">
+  <div class="mask"> </div>
+  <div class="modal">
+    <div class="modal-header">
+      <button type="button" class="close cancel">&times;</button>
+      <h3>Add Block</h3>
+    </div>
+
+    <div class="modal-body">
+      {{#if error}}
+        <div class="alert alert-error">{{error}}</div>
+      {{/if}}
+
+      <label>Title</label>
+      <input type="text" class="title span5">
+      
+      <label>Body</label>
+      <textarea class="body span5"></textarea>
+
+    </div>
+
+    <div class="modal-footer">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary save">Add Block</a>
     </div>
   </div>
 </template>
