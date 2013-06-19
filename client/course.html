@@ -1,5 +1,8 @@
 <template name="course">
   <div class="container">
+    {{#if showCreateChapterDialog}}
+      {{> createChapterDialog}}
+    {{/if}}
     {{#if course}}
     {{#with course}}
     <div class="row">
@@ -10,28 +13,58 @@
     <div class="row">
       <div class="span3">
         <ul>
-          <li>One</li>
-          <li>Two
-            <ul>
-              <li>two.1</li>
-              <li>two.2</li>
-            </ul>
-          </li>
+          {{#if anyChapters}}
+          {{#each chapters}}
+            <li>{{title}}</li>
+          {{/each}}
+          {{/if}}
         </ul>
       </div>
       <div class="span9">
         <div class="navbar">
           <div class="navbar-inner">
             <ul class="nav">
-              <li><a href="#"><i class="icon-camera-retro icon-large"></i> icon-camera-retro</a></li>
-              <li><a href="#"><i class="icon-camera-retro icon-large"></i> icon-camera-retro</a></li>
-              <li><a href="#">Link</a></li>
+              <li><a href="#" class="createChapter"><i class="icon-camera-retro icon-large"></i> Create Chapter</a></li>
+              <li><a href="#" class="createSection"><i class="icon-camera-retro icon-large"></i> Create Section</a></li>
+              <li><a href="#" class="createBlock"><i class="icon-camera-retro icon-large"></i> Create Block</a></li>
             </ul>
           </div>
         </div>
+        {{#if anyChapters}}
+        {{#each chapters}}
+          <h2>{{title}} <small>{{_id}}</small></h2>
+        {{/each}}
+        {{/if}}
       </div>
     </div>
     {{/with}}
     {{/if}}
+  </div>
+</template>
+
+<!-- createChapterDialog template -->
+
+<template name="createChapterDialog">
+  <div class="mask"> </div>
+  <div class="modal">
+    <div class="modal-header">
+      <button type="button" class="close cancel">&times;</button>
+      <h3>Add Chapter</h3>
+    </div>
+
+    <div class="modal-body">
+      {{#if error}}
+        <div class="alert alert-error">{{error}}</div>
+      {{/if}}
+
+      <label>Title</label>
+      <input type="text" class="title span5">
+
+    </div>
+
+    <div class="modal-footer">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary save">Add Chapter</a>
+    </div>
   </div>
 </template>
