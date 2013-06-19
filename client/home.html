@@ -1,0 +1,87 @@
+<head>
+  <title>CourseBuilder</title>
+</head>
+
+<!-- body -->
+
+<body>
+  {{> toolbar}}
+  <div id="main">
+    {{renderPage}}
+  </div>
+</body>
+
+<!-- home template -->
+
+<template name="home">
+  {{#if showCreateCourseDialog}}
+    {{> createCourseDialog}}
+  {{/if}}
+  
+  <div class="container">
+    <div class="row">
+      <div class="span12">
+        <h1>Home</h1>
+        <p>Welcome to {{greeting}}.</p>
+      </div>
+    </div>
+    {{#if currentUser}}
+      {{#if anyCourses}}
+        <h2>Your Courses</h2>
+        <table class="table table-hover">
+          <tr>
+            <th>Title</th>
+            <th style="width: 95px">Actions</th>
+          </tr>
+          {{#each courses}}
+          <tr>
+            <td>{{title}} ({{_id}})</td>
+            <td>
+              <a href="#" class="btn btn-mini"><i class="icon-remove-sign"></i></a>
+              <a href="/courses/{{_id}}" class="btn btn-mini"><i class="icon-pencil"></i></a>
+            </td>
+          </tr>
+          {{/each}}
+        </table>
+      {{else}}
+      <div class="well">
+        You have no courses.
+      </div>
+      {{/if}}
+      <a href="#" id="createCourseButton" class="btn btn-large btn-primary pull-right"><i class="icon-book"></i> Create Course</a>
+    {{else}}
+      <p>Sign in to start!</p>
+    {{/if}}
+  </div>
+</template>
+
+<!-- createCourseDialog template -->
+
+<template name="createCourseDialog">
+  <div class="mask"> </div>
+  <div class="modal">
+    <div class="modal-header">
+      <button type="button" class="close cancel">&times;</button>
+      <h3>Add Course</h3>
+    </div>
+
+    <div class="modal-body">
+      {{#if error}}
+        <div class="alert alert-error">{{error}}</div>
+      {{/if}}
+
+      <label>Title</label>
+      <input type="text" class="title span5">
+
+      <label>Description</label>
+      <textarea class="description span5"></textarea>
+
+    </div>
+
+    <div class="modal-footer">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary save">Add course</a>
+    </div>
+  </div>
+</template>
+
