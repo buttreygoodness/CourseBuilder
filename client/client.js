@@ -22,6 +22,10 @@ Meteor.Router.add({
   '/courses/:id': function(id) {
     Session.set('currentCourse', id);
     return 'course';
+  },
+  '/courses/:id/preview': function(id) {
+    Session.set('currentCourse', id);
+    return 'preview';
   }
 });
 

@@ -1,0 +1,45 @@
+<template name="preview">
+  <div class="container">
+    <div class="row">
+      <div class="span3 offset1">
+        <ul id="table-of-contents" class="nav nav-list affix-top" data-spy="affix" data-offset-top="40">
+          {{#each chapters}}
+          <li class=""><a href="#{{_id}}">{{title}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+      
+      <!-- begin course -->
+      
+      <div id="course" class="span7">
+      {{#with course}}
+        <div class="hero-unit">
+          <h1 id="{{title}}">{{title}}</h1>
+          <p>{{description}}</p>
+        </div>
+        {{#each chapters}}
+        <section class="chapter">
+          <div class="page-header" name="{{_id}}">
+            <h2>{{title}}</h2>
+          </div>
+          {{#each sections}}
+          <section class="section">
+            <h3>{{title}}</h3>
+            {{#each blocks}}
+            <article>
+              <h4>{{title}}</h4>
+              <p>{{body}}</p>
+            </article>
+            {{/each}}
+          </section>
+          {{/each}}
+        </section>
+        {{/each}}
+      {{/with}}
+      </div>
+      
+      <!-- end course -->
+      
+    </div>
+  </div>
+</template>

@@ -18,13 +18,16 @@
     </div>
     <div class="row">
       <div class="span3">
-        <ul>
-          {{#if anyChapters}}
-          {{#each chapters}}
-            <li>{{title}}</li>
-          {{/each}}
-          {{/if}}
-        </ul>
+        <div class="well">
+          <ul>
+            {{#if anyChapters}}
+            {{#each chapters}}
+              <li>{{title}}</li>
+            {{/each}}
+            {{/if}}
+          </ul>
+        </div>
+        
       </div>
       <div class="span9">
         {{#if anySections}}
@@ -42,7 +45,7 @@
               {{#each blocks}}
               <div class="block">
                 <h4>{{title}}</h4>
-                <p><small>({{_id}})</small> {{body}}</p>
+                <p>{{body}} {{_id}}</p>
               </div>
               {{/each}}
             {{/if}}
@@ -69,7 +72,7 @@
 
 <template name="chapterControls">
   <a href="#" class="btn btn-small createSection">Add Section</a>
-  <a href="#" class="btn btn-small createBlock">Add Block</a>
+  <!-- <a href="#" class="btn btn-small createBlock">Add Block</a> -->
 </template>
 
 <template name="sectionControls">
@@ -145,7 +148,7 @@
         <div class="alert alert-error">{{error}}</div>
       {{/if}}
 
-      <label>Title</label>
+      <label>Title <small>(Optional) It won't display unless you enter it.</small></label>
       <input type="text" class="title span5">
       
       <label>Body</label>
