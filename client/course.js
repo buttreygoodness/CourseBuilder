@@ -24,7 +24,8 @@ Template.course.helpers({
     return Modules.find({ parentId: Session.get('currentCourse'), module_type: 'am_chapter' });
   },
   
-  anySections: function () {
+  anySections: function (i, e) {
+    console.log(i, e, this);
     var secs = Modules.find({ parentId: this._id, module_type: 'am_section' });
     return secs.count() > 0;
   },

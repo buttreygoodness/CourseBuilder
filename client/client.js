@@ -44,3 +44,4 @@ Meteor.Router.filters({
 // Applies to all pages
 
 Meteor.Router.filter('checkLoggedIn');
+

@@ -37,20 +37,23 @@
         {{/if}}
         {{#if anyChapters}}
         {{#each chapters}}
-          <h2 class="chapter {{_id}} {{#if selectedChapter}}selected{{/if}}">{{title}} {{#if selectedChapter}}<small>{{_id}}</small> {{> chapterControls}}{{/if}}</h2>
+        <section class='chapter' id='{{_id}}'>
+          {{> module_chapter}}
           {{#if anySections}}
             {{#each sections}}
-            <h3 class="section {{_id}} {{#if selectedSection}}selected{{/if}}">{{title}} {{#if selectedSection}}<small>{{_id}}</small> {{> sectionControls}}{{/if}}</h3>
-            {{#if anyBlocks}}
-              {{#each blocks}}
-              <div class="block">
-                <h4>{{title}}</h4>
-                <p>{{body}} {{_id}}</p>
-              </div>
-              {{/each}}
-            {{/if}}
+              <section class='section' id='{{_id}}'>
+              {{> module_section}}
+              {{#if anyBlocks}}
+                {{#each blocks}}
+                  <article class='block' id='{{_id}}'>
+                  {{> block_text}}
+                  </article>
+                {{/each}}
+              {{/if}}
+              </section>
             {{/each}}
           {{/if}}
+        </section>
         {{/each}}
         {{else}}
         <div class="well">
@@ -61,6 +64,21 @@
     </div>
     {{/with}}
     {{/if}}
+  </div>
+</template>
+
+<template name="module_chapter">
+  <h2>{{title}} {{#if selectedChapter}}<small>{{_id}}</small> {{> chapterControls}}{{/if}}</h2>
+</template>
+
+<template name="module_section">
+  <h3>{{title}} {{#if selectedSection}}<small>{{_id}}</small> {{> sectionControls}}{{/if}}</h3>
+</template>
+
+<template name="block_text">
+  <div>
+    <h4>{{title}}</h4>
+    <p>{{body}}</p>
   </div>
 </template>
 
