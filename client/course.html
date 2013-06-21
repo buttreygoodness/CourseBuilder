@@ -12,16 +12,15 @@
       </div>
       <div class="row">
         <div class="span3">
-          <div class="well">
-            <ul>
-              {{#if anyChapters}}
-                {{#each chapters}}
-                  <li>{{title}}</li>
-                {{/each}}
-              {{/if}}
-            </ul>
-          </div>
+          {{#if anyChapters}}
+            <div class="accordion" id="sidebarAccordion" style="margin-top: 20px;" data-spy="affix" data-offset-top="200">
+              {{#each chapters}}
+                {{> toc_chapter}}
+              {{/each}}
+            </div>
+          {{/if}}
         </div>
+        
         <div class="span9">
           {{#if showCreateChapterDialog}}
             {{> createChapterDialogInline}}
@@ -45,6 +44,34 @@
       {{/with}}
     {{/if}}
   </div>
+</template>
+
+<template name="toc_chapter">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#sidebarAccordion" href="#collapse{{_id}}" style="text-decoration: none;">
+        {{title}}
+        {{#if anySections}}
+        <div class="pull-right">
+          <i class="icon-chevron-sign-down"></i>
+        </div>
+        {{/if}}
+      </a> 
+    </div>
+    {{#if anySections}}
+    <div id="collapse{{_id}}" class="accordion-body collapse">
+      <div class="accordion-inner">
+        {{#each sections}}
+          {{> toc_section}}
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</template>
+
+<template name="toc_section">
+  <a href="#" class="toc_section" style="margin-left: 10px;">{{title}}</a>
 </template>
 
 <template name="module_chapter">
