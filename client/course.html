@@ -1,78 +1,75 @@
 <template name="course">
   <div class="container">
-    {{#if showCreateSectionDialog}}
-      {{> createSectionDialog}}
-    {{/if}}
-    {{#if showCreateChapterDialog}}
-      {{> createChapterDialog}}
-    {{/if}}
     {{#if showCreateBlockDialog}}
       {{> createBlockDialog}}
     {{/if}}
     {{#if course}}
-    {{#with course}}
-    <div class="row">
-      <div class="span12">
-        <h1>{{title}} <small>{{_id}}</small>  {{> courseControls}}</h1>
-      </div>
-    </div>
-    <div class="row">
-      <div class="span3">
-        <div class="well">
-          <ul>
-            {{#if anyChapters}}
-            {{#each chapters}}
-              <li>{{title}}</li>
-            {{/each}}
-            {{/if}}
-          </ul>
+      {{#with course}}
+      <div class="row">
+        <div class="span12">
+          <h1>{{title}} <small>{{_id}}</small>  {{> courseControls}}</h1>
         </div>
-        
       </div>
-      <div class="span9">
-        {{#if anySections}}
-          {{#each sections}}
-          <h3>{{title}} <small>{{_id}}</small></h3>
-          {{/each}}
-        {{/if}}
-        {{#if anyChapters}}
-        {{#each chapters}}
-        <section class='chapter' id='{{_id}}'>
-          {{> module_chapter}}
-          {{#if anySections}}
-            {{#each sections}}
-              <section class='section' id='{{_id}}'>
-              {{> module_section}}
-              {{#if anyBlocks}}
-                {{#each blocks}}
-                  <article class='block' id='{{_id}}'>
-                  {{> block_text}}
-                  </article>
+      <div class="row">
+        <div class="span3">
+          <div class="well">
+            <ul>
+              {{#if anyChapters}}
+                {{#each chapters}}
+                  <li>{{title}}</li>
                 {{/each}}
               {{/if}}
-              </section>
+            </ul>
+          </div>
+        </div>
+        <div class="span9">
+          {{#if showCreateChapterDialog}}
+            {{> createChapterDialogInline}}
+          {{/if}}
+          {{#if anySections}}
+            {{#each sections}}
+              {{> module_section}}
             {{/each}}
           {{/if}}
-        </section>
-        {{/each}}
-        {{else}}
-        <div class="well">
-          Get started by adding some chapters.
+          {{#if anyChapters}}
+            {{#each chapters}}
+              {{> module_chapter}}
+            {{/each}}
+          {{else}}
+            <div class="well">
+              Get started by adding some chapters.
+            </div>
+          {{/if}}
         </div>
-        {{/if}}
       </div>
-    </div>
-    {{/with}}
+      {{/with}}
     {{/if}}
   </div>
 </template>
 
 <template name="module_chapter">
-  <h2>{{title}} {{#if selectedChapter}}<small>{{_id}}</small> {{> chapterControls}}{{/if}}</h2>
+  <section class="chapter" id="{{_id}}">
+    <h2>{{title}} {{#if selected}}<small>{{_id}}</small> {{> chapterControls}}{{/if}}</h2>
+    {{#if showCreateSectionDialog}}
+      {{> createSectionDialogInline}}
+    {{/if}}
+    {{#if anySections}}
+      {{#each sections}}
+        {{> module_section}}
+      {{/each}}
+    {{/if}}
+  </section>
 </template>
 
 <template name="module_section">
-  <h3>{{title}} {{#if selectedSection}}<small>{{_id}}</small> {{> sectionControls}}{{/if}}</h3>
+  <section class="section" id="{{_id}}">
+    <h3>{{title}} {{#if selected}}<small>{{_id}}</small> {{> sectionControls}}{{/if}}</h3>
+    {{#if anyBlocks}}
+      {{#each blocks}}
+        {{> block_text}}
+      {{/each}}
+    {{/if}}
+  </section>
 </template>
 
 <template name="block_text">
@@ -95,6 +92,48 @@
 
 <template name="sectionControls">
   <a href="#" class="btn btn-small createBlock">Add Block</a>
+</template>
+
+<template name="blockControls">
+  <a href="#" class="btn btn-small edit">Edit Block</a>
+</template>
+
+<!-- createChapterDialogInline -->
+
+<template name="createChapterDialogInline">
+  
+  <div class="inline-form">
+    {{#if error}}
+    <div class="alert alert-error">{{error}}</div>
+    {{/if}}
+  
+    <input type="text" class="title span5" placeholder="Enter a chapter title">
+  
+    <div class="btn-group pull-right">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary save">Add Chapter</a>
+    </div>
+  </div>
+  
+</template>
+
+<!-- createChapterDialogInline -->
+
+<template name="createSectionDialogInline">
+  
+  <div class="inline-form">
+    {{#if error}}
+    <div class="alert alert-error">{{error}}</div>
+    {{/if}}
+  
+    <input type="text" class="title span5" placeholder="Enter a chapter title">
+  
+    <div class="btn-group pull-right">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary save">Add Chapter</a>
+    </div>
+  </div>
+  
 </template>
 
 <!-- createChapterDialog template -->

@@ -1,9 +1,7 @@
 // course template
 
 Template.course.created = function () {
-  Session.set('selectedChapter', null);
-  Session.set('selectedSection', null);
-  Session.set('selectedBlock', null);
+  Session.set('selectedNode', null);
   Session.set('showCreateChapterDialog', null);
   Session.set('showCreateSectionDialog', null);
   Session.set('showCreateBlockDialog', null);
@@ -25,34 +23,12 @@ Template.course.helpers({
   },
   
   anySections: function (i, e) {
-    console.log(i, e, this);
     var secs = Modules.find({ parentId: this._id, module_type: 'am_section' });
-    return secs.count() > 0;
-  },
-  
-  anyBlocks: function () {
-    var secs = Modules.find({ parentId: this._id, module_type: 'am_block' });
     return secs.count() > 0;
   },
   
   sections: function () {
     return Modules.find({ parentId: this._id, module_type: 'am_section' });
-  },
-  
-  blocks: function () {
-    return Modules.find({ parentId: this._id, module_type: 'am_block' });
-  },
-  
-  selectedChapter: function (i, e) {
-    return this._id == Session.get('selectedChapter');
-  },
-  
-  selectedSection: function (i, e) {
-    return this._id == Session.get('selectedSection');
-  },
-  
-  selectedBlock: function (i, e) {
-    return this._id == Session.get('selectedBlock');
   },
   
   showCreateChapterDialog: function () {
@@ -67,6 +43,23 @@ Template.course.helpers({
     return Session.get('showCreateBlockDialog');
   }
   
+});
+
+// Template.course.events({
+//   
+//   'click .createSection': function (event, template) {
+//     Session.set('showCreateSectionDialog', true);
+//   }
+//   
+// });
+
+// chapterControls template
+
+Template.chapterControls.events({
+  'click .createSection': function (event, template) {
+    console.log('chapterControls createSection');
+    Session.set('showCreateSectionDialog', true);
+  }
 });
 
 // courseControls template
@@ -97,22 +90,88 @@ var deselectAll = function () {
   $('.selected').removeClass('selected');
 }
 
-Template.course.events({
-  
-  'click .chapter': function (event, template) {
-    deselectAll();
-    $(template.find('.' + this._id)).addClass('selected');
-    Session.set('selectedChapter', this._id);
+// module_chapter template
+
+Template.module_chapter.helpers({
+  selected: function () {
+    return Session.get('selectedNode') === this._id;
   },
   
-  'click .section': function (event, template) {
-    deselectAll();
-    $(template.find('.' + this._id)).addClass('selected');
-    Session.set('selectedSection', this._id);
+  anySections: function () {
+    var secs = Modules.find({ parentId: this._id, module_type: 'am_section' });
+    return secs.count() > 0;
   },
   
-  'click .createSection': function (event, template) {
-    Session.set('showCreateSectionDialog', true);
+  sections: function () {
+    return Modules.find({ parentId: this._id, module_type: 'am_section' });
+  }
+});
+
+Template.module_chapter.events({
+  
+  'click': function (event, template) {
+    Session.set('selectedNode', this._id);
+  },
+  
+  // 'mouseleave h2': function (event, template) {
+  //   Session.set('selectedNode', null);
+  // }
+  
+});
+
+// module_section template
+
+Template.module_section.helpers({
+  selected: function () {
+    return Session.get('selectedNode') === this._id;
+  },
+  
+  anyBlocks: function () {
+    var secs = Modules.find({ parentId: this._id, module_type: 'am_block' });
+    return secs.count() > 0;
+  },
+  
+  blocks: function () {
+    return Modules.find({ parentId: this._id, module_type: 'am_block' });
+  }
+});
+
+Template.module_section.events({
+  
+  'click': function (event, template) {
+    Session.set('selectedNode', this._id);
+  },
+
+  // 'mouseleave h3': function (event, template) {
+  //   Session.set('selectedNode', null);
+  // }
+  
+});
+
+// createChapterDialogInline template
+
+Template.createChapterDialogInline.events({
+  
+  'click .cancel': function (event, template) {
+    Session.set('showCreateChapterDialog', false);
+  },
+  
+  'click .save': function (event, template) {
+    var title = template.find('.title').value;
+    
+    if (title.length) {
+      Meteor.call('createChapter', {
+        title: title,
+        parentId: Session.get('currentCourse')
+      }, function (error, chapter){
+        if (! error) {
+          Session.set('selectedNode', chapter);
+          Session.set('showCreateChapterDialog', false);
+        } else {
+          console.log(error);
+        }
+      });
+    }
   }
   
 });
@@ -134,7 +193,7 @@ Template.createChapterDialog.events({
         parentId: Session.get('currentCourse')
       }, function (error, chapter){
         if (! error) {
-          Session.set('selectedChapter', chapter);
+          Session.set('selectedNode', chapter);
           Session.set('showCreateChapterDialog', false);
         } else {
           console.log(error);
@@ -155,7 +214,7 @@ Template.createSectionDialog.events({
   
   'click .save': function (event, template) {
     var title = template.find('.title').value;
-    var parent = Session.get('selectedChapter') || Session.get('currentCourse');
+    var parent = Session.get('selectedNode') || Session.get('currentCourse');
     
     if (title.length) {
       Meteor.call('createSection', {
@@ -163,7 +222,7 @@ Template.createSectionDialog.events({
         parentId: parent
       }, function (error, section){
         if (! error) {
-          Session.set('selectedSection', section);
+          Session.set('selectedNode', section);
           Session.set('showCreateSectionDialog', false);
         } else {
           console.log(error);
@@ -185,7 +244,7 @@ Template.createBlockDialog.events({
   'click .save': function (event, template) {
     var title = template.find('.title').value;
     var body = template.find('.body').value;
-    var parent = Session.get('selectedSection');
+    var parent = Session.get('selectedNode');
     
     if (body.length) {
       Meteor.call('createBlock', {
@@ -194,7 +253,7 @@ Template.createBlockDialog.events({
         parentId: parent
       }, function (error, block){
         if (! error) {
-          Session.set('selectedBlock', block);
+          Session.set('selectedNode', block);
           Session.set('showCreateBlockDialog', false);
         } else {
           console.log(error);

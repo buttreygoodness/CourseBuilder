@@ -25,3 +25,9 @@ div.block {
 .span3 > .well {
   margin-top: 20px;
 }
+
+.inline-form {
+  padding: 15px;
+  padding-bottom: 5px;
+  background-color: #EEE;
+}
