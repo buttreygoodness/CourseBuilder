@@ -62,7 +62,7 @@ Template.toc_chapter.helpers({
 
 Template.chapterControls.events({
   'click .createSection': function (event, template) {
-    console.log('chapterControls createSection');
+    event.preventDefault();
     Session.set('showCreateSectionDialog', true);
   }
 });
@@ -109,6 +109,10 @@ Template.module_chapter.helpers({
   
   sections: function () {
     return Modules.find({ parentId: this._id, module_type: 'am_section' });
+  },
+  
+  showCreateSectionDialog: function () {
+    return Session.get('showCreateSectionDialog') && Session.get('selectedNode') === this._id;
   }
 });
 
@@ -145,12 +149,8 @@ Template.module_section.events({
   
   'click': function (event, template) {
     Session.set('selectedNode', this._id);
-  },
+  }
 
-  // 'mouseleave h3': function (event, template) {
-  //   Session.set('selectedNode', null);
-  // }
-  
 });
 
 // createChapterDialogInline template
@@ -158,10 +158,12 @@ Template.module_section.events({
 Template.createChapterDialogInline.events({
   
   'click .cancel': function (event, template) {
+    event.preventDefault();
     Session.set('showCreateChapterDialog', false);
   },
   
   'click .save': function (event, template) {
+    event.preventDefault();
     var title = template.find('.title').value;
     
     if (title.length) {
@@ -172,6 +174,37 @@ Template.createChapterDialogInline.events({
         if (! error) {
           Session.set('selectedNode', chapter);
           Session.set('showCreateChapterDialog', false);
+        } else {
+          console.log(error);
+        }
+      });
+    }
+  }
+  
+});
+
+// createSectionDialogInline template
+
+Template.createSectionDialogInline.events({
+  
+  'click .cancel': function (event, template) {
+    event.preventDefault();
+    Session.set('showCreateSectionDialog', false);
+  },
+  
+  'click .save': function (event, template) {
+    event.preventDefault();
+    var title = template.find('.title').value;
+    var parent = Session.get('selectedNode') || Session.get('currentCourse');
+    
+    if (title.length) {
+      Meteor.call('createSection', {
+        title: title,
+        parentId: parent
+      }, function (error, section){
+        if (! error) {
+          Session.set('selectedNode', section);
+          Session.set('showCreateSectionDialog', false);
         } else {
           console.log(error);
         }
