@@ -7,6 +7,12 @@ Template.course.created = function () {
   Session.set('showCreateBlockDialog', null);
 }
 
+var resetDialogs = function () {
+  Session.set('showCreateChapterDialog', null);
+  Session.set('showCreateSectionDialog', null);
+  Session.set('showCreateBlockDialog', null);
+}
+
 Template.course.helpers({
   
   course: function () {
@@ -60,6 +66,12 @@ Template.toc_chapter.helpers({
 
 // chapterControls template
 
+Template.chapterControls.helpers({
+  showCreateSectionDialog: function () {
+    return Session.get('showCreateSectionDialog') && Session.get('selectedNode') === this._id;
+  }
+});
+
 Template.chapterControls.events({
   'click .createSection': function (event, template) {
     event.preventDefault();
@@ -82,6 +94,14 @@ Template.courseControls.events({
 });
 
 // sectionControls template
+
+Template.sectionControls.helpers({
+  
+  showCreateBlockDialog: function () {
+    return Session.get('showCreateBlockDialog') && Session.get('selectedNode') === this._id;
+  }
+  
+});
 
 Template.sectionControls.events({
   
@@ -109,22 +129,15 @@ Template.module_chapter.helpers({
   
   sections: function () {
     return Modules.find({ parentId: this._id, module_type: 'am_section' });
-  },
-  
-  showCreateSectionDialog: function () {
-    return Session.get('showCreateSectionDialog') && Session.get('selectedNode') === this._id;
   }
+  
 });
 
 Template.module_chapter.events({
   
   'click': function (event, template) {
     Session.set('selectedNode', this._id);
-  },
-  
-  // 'mouseleave h2': function (event, template) {
-  //   Session.set('selectedNode', null);
-  // }
+  }
   
 });
 
@@ -142,11 +155,8 @@ Template.module_section.helpers({
   
   blocks: function () {
     return Modules.find({ parentId: this._id, module_type: 'am_block' });
-  },
-  
-  showCreateBlockDialog: function () {
-    return Session.get('showCreateBlockDialog') && Session.get('selectedNode') === this._id;
   }
+  
 });
 
 Template.module_section.events({
@@ -220,7 +230,7 @@ Template.createSectionDialogInline.events({
 
 // createBlockDialogInline template
 
-Template.createSectionDialogInline.events({
+Template.createBlockDialogInline.events({
   
   'click .cancel': function (event, template) {
     event.preventDefault();

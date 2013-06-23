@@ -79,9 +79,6 @@
 <template name="module_chapter">
   <section class="chapter" id="{{_id}}">
     <h2>{{title}} {{#if selected}}<span class="muted">{{_id}}</span> {{> chapterControls}}{{/if}}</h2>
-    {{#if showCreateSectionDialog}}
-      {{> createSectionDialogInline}}
-    {{/if}}
     {{#if anySections}}
       {{#each sections}}
         {{> module_section}}
@@ -118,12 +115,19 @@
 </template>
 
 <template name="chapterControls">
-  <a href="#" class="btn btn-mini createSection">Add Section</a>
-  <!-- <a href="#" class="btn btn-mini createBlock">Add Block</a> -->
+  {{#if showCreateSectionDialog}}
+    {{> createSectionDialogInline}}
+  {{else}}
+    <a href="#" class="btn btn-mini createSection">Add Section</a>
+  {{/if}}
 </template>
 
 <template name="sectionControls">
-  <a href="#" class="btn btn-mini createBlock">Add Block</a>
+  {{#if showCreateBlockDialog}}
+    {{> createBlockDialogInline}}
+  {{else}}
+    <a href="#" class="btn btn-mini createBlock">Add Block</a>
+  {{/if}}
 </template>
 
 <template name="blockControls">
