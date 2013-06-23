@@ -142,6 +142,10 @@ Template.module_section.helpers({
   
   blocks: function () {
     return Modules.find({ parentId: this._id, module_type: 'am_block' });
+  },
+  
+  showCreateBlockDialog: function () {
+    return Session.get('showCreateBlockDialog') && Session.get('selectedNode') === this._id;
   }
 });
 
@@ -205,6 +209,39 @@ Template.createSectionDialogInline.events({
         if (! error) {
           Session.set('selectedNode', section);
           Session.set('showCreateSectionDialog', false);
+        } else {
+          console.log(error);
+        }
+      });
+    }
+  }
+  
+});
+
+// createBlockDialogInline template
+
+Template.createSectionDialogInline.events({
+  
+  'click .cancel': function (event, template) {
+    event.preventDefault();
+    Session.set('showCreateBlockDialog', false);
+  },
+  
+  'click .save': function (event, template) {
+    event.preventDefault();
+    var title = template.find('.title').value;
+    var body = template.find('.body').value;
+    var parent = Session.get('selectedNode') || Session.get('currentCourse');
+    
+    if (title.length) {
+      Meteor.call('createBlock', {
+        title: title,
+        body: body,
+        parentId: parent
+      }, function (error, section){
+        if (! error) {
+          Session.set('selectedNode', section);
+          Session.set('showCreateBlockDialog', false);
         } else {
           console.log(error);
         }
