@@ -46,6 +46,8 @@
   </div>
 </template>
 
+<!-- toc_chapter -->
+
 <template name="toc_chapter">
   <div class="accordion-group">
     <div class="accordion-heading">
@@ -70,15 +72,19 @@
   </div>
 </template>
 
+<!-- toc_section -->
+
 <template name="toc_section">
   <div>
     <a href="#" class="toc_section" style="margin-left: 10px;">{{title}}</a>
   </div>
 </template>
 
+<!-- module_chapter -->
+
 <template name="module_chapter">
   <section class="chapter" id="{{_id}}">
-    <h2>{{title}} {{#if selected}}<span class="muted">{{_id}}</span> {{> chapterControls}}{{/if}}</h2>
+    {{> chapterControls}}
     {{#if anySections}}
       {{#each sections}}
         {{> module_section}}
@@ -86,6 +92,27 @@
     {{/if}}
   </section>
 </template>
+
+<!-- chapter_controls -->
+
+<template name="chapterControls">
+  {{#with chapter}}
+    {{#if selected}}
+      {{#if showEditChapterDialog}}
+        {{> editChapterDialogInline}}
+      {{else}}
+        <h2>{{title}} <a href="#" class="btn btn-mini editSection">Edit</a><a href="#" class="btn btn-mini createSection">Add Section</a></h2>
+      {{/if}}
+      {{#if showCreateSectionDialog}}
+        {{> createSectionDialogInline}}
+      {{/if}}
+    {{else}}
+      <h2>{{title}}</h2>
+    {{/if}}
+  {{/with}}
+</template>
+
+<!-- module_section -->
 
 <template name="module_section">
   <section class="section" id="{{_id}}">
@@ -101,6 +128,8 @@
   </section>
 </template>
 
+<!-- block_text -->
+
 <template name="block_text">
   <div>
     <h4>{{title}}</h4>
@@ -108,27 +137,26 @@
   </div>
 </template>
 
+<!-- course_controls -->
+
 <template name="courseControls">
   <a href="#" class="btn btn-mini createChapter">Add Chapter</a>
   <a href="#" class="btn btn-mini createSection">Add Section</a>
   <a href="#" class="btn btn-mini">Add Block</a>
 </template>
 
-<template name="chapterControls">
-  {{#if showCreateSectionDialog}}
-    {{> createSectionDialogInline}}
-  {{else}}
-    <a href="#" class="btn btn-mini createSection">Add Section</a>
-  {{/if}}
-</template>
+<!-- section_controls -->
 
 <template name="sectionControls">
   {{#if showCreateBlockDialog}}
     {{> createBlockDialogInline}}
   {{else}}
+    <a href="#" class="btn btn-mini edit">Edit</a>
     <a href="#" class="btn btn-mini createBlock">Add Block</a>
   {{/if}}
 </template>
+
+<!-- block_controls -->
 
 <template name="blockControls">
   <a href="#" class="btn btn-mini edit">Edit Block</a>
@@ -148,6 +176,25 @@
     <div class="btn-group pull-right">
       <a href="#" class="btn cancel">Cancel</a>
       <a href="#" class="btn btn-primary save">Add Chapter</a>
+    </div>
+  </div>
+  
+</template>
+
+<!-- editChapterDialogInline -->
+
+<template name="editChapterDialogInline">
+  
+  <div class="inline-form">
+    {{#if error}}
+    <div class="alert alert-error">{{error}}</div>
+    {{/if}}
+  
+    <input type="text" class="title span5" placeholder="Enter a chapter title" value="{{title}}">
+  
+    <div class="btn-group pull-right">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary save">Save</a>
     </div>
   </div>
   
@@ -186,92 +233,8 @@
   
     <div class="btn-group pull-right">
       <a href="#" class="btn cancel">Cancel</a>
-      <a href="#" class="btn btn-primary save">Add Section</a>
-    </div>
-  </div>
-  
-</template>
-
-<!-- createChapterDialog template -->
-
-<template name="createChapterDialog">
-  <div class="mask"> </div>
-  <div class="modal">
-    <div class="modal-header">
-      <button type="button" class="close cancel">&times;</button>
-      <h3>Add Chapter</h3>
-    </div>
-
-    <div class="modal-body">
-      {{#if error}}
-        <div class="alert alert-error">{{error}}</div>
-      {{/if}}
-
-      <label>Title</label>
-      <input type="text" class="title span5">
-
-    </div>
-
-    <div class="modal-footer">
-      <a href="#" class="btn cancel">Cancel</a>
-      <a href="#" class="btn btn-primary save">Add Chapter</a>
-    </div>
-  </div>
-</template>
-
-<!-- createSectionDialog template -->
-
-<template name="createSectionDialog">
-  <div class="mask"> </div>
-  <div class="modal">
-    <div class="modal-header">
-      <button type="button" class="close cancel">&times;</button>
-      <h3>Add Section</h3>
-    </div>
-
-    <div class="modal-body">
-      {{#if error}}
-        <div class="alert alert-error">{{error}}</div>
-      {{/if}}
-
-      <label>Title</label>
-      <input type="text" class="title span5">
-
-    </div>
-
-    <div class="modal-footer">
-      <a href="#" class="btn cancel">Cancel</a>
-      <a href="#" class="btn btn-primary save">Add Section</a>
-    </div>
-  </div>
-</template>
-
-<!-- createBlockDialog template -->
-
-<template name="createBlockDialog">
-  <div class="mask"> </div>
-  <div class="modal">
-    <div class="modal-header">
-      <button type="button" class="close cancel">&times;</button>
-      <h3>Add Block</h3>
-    </div>
-
-    <div class="modal-body">
-      {{#if error}}
-        <div class="alert alert-error">{{error}}</div>
-      {{/if}}
-
-      <label>Title <span class="muted">(Optional) It won't display unless you enter it.</span></label>
-      <input type="text" class="title span5">
-      
-      <label>Body</label>
-      <textarea class="body span5"></textarea>
-
-    </div>
-
-    <div class="modal-footer">
-      <a href="#" class="btn cancel">Cancel</a>
       <a href="#" class="btn btn-primary save">Add Block</a>
     </div>
   </div>
+  
 </template>

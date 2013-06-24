@@ -3,6 +3,7 @@
 Template.course.created = function () {
   Session.set('selectedNode', null);
   Session.set('showCreateChapterDialog', null);
+  Session.set('showEditChapterDialog', null);
   Session.set('showCreateSectionDialog', null);
   Session.set('showCreateBlockDialog', null);
 }
@@ -64,31 +65,55 @@ Template.toc_chapter.helpers({
   
 });
 
-// chapterControls template
-
-Template.chapterControls.helpers({
-  showCreateSectionDialog: function () {
-    return Session.get('showCreateSectionDialog') && Session.get('selectedNode') === this._id;
-  }
-});
-
-Template.chapterControls.events({
-  'click .createSection': function (event, template) {
-    event.preventDefault();
-    Session.set('showCreateSectionDialog', true);
-  }
-});
-
 // courseControls template
 
 Template.courseControls.events({
   
   'click .createChapter': function (event, template) {
+    event.preventDefault();
     Session.set('showCreateChapterDialog', true);
   },
   
   'click .createSection': function (event, template) {
+    event.preventDefault();
     Session.set('showCreateSectionDialog', true);
+  }
+  
+});
+
+// chapterControls template
+
+Template.chapterControls.helpers({
+  
+  showEditChapterDialog: function () {
+    return Session.get('showEditChapterDialog') && Session.get('selectedNode') === this._id;
+  },
+  
+  showCreateSectionDialog: function () {
+    return Session.get('showCreateSectionDialog') && Session.get('selectedNode') === this._id;
+  },
+  
+  chapter: function () {
+    return Modules.findOne(this._id);
+  },
+  
+  selected: function () {
+    return Session.get('selectedNode') === this._id;
+  }
+  
+});
+
+Template.chapterControls.events({
+  
+  'click .createSection': function (event, template) {
+    event.preventDefault();
+    Session.set('showCreateSectionDialog', true);
+  },
+  
+  'click .editSection': function (event, template) {
+    event.preventDefault();
+    console.log('chapterControls.editChapter');
+    Session.set('showEditChapterDialog', true);
   }
   
 });
@@ -106,6 +131,7 @@ Template.sectionControls.helpers({
 Template.sectionControls.events({
   
   'click .createBlock': function (event, template) {
+    event.preventDefault();
     Session.set('showCreateBlockDialog', true);
   }
   
@@ -162,9 +188,36 @@ Template.module_section.helpers({
 Template.module_section.events({
   
   'click': function (event, template) {
+    event.preventDefault();
     Session.set('selectedNode', this._id);
   }
 
+});
+
+// editChapterDialogInline template
+
+Template.editChapterDialogInline.events({
+  'click .cancel': function (event, template) {
+    event.preventDefault();
+    Session.set('showEditChapterDialog', null);
+  },
+  
+  'click .save': function (event, template) {
+    event.preventDefault();
+    var title = template.find('.title').value;
+    
+    if (title.length) {
+      Meteor.call('updateChapter', {
+        title: title,
+        _id: this._id
+      }, function (error, chapter) {
+        if (! error) {
+          Session.set('selectedNode', chapter);
+          Session.set('showEditChapterDialog', null);
+        }
+      });
+    }
+  }
 });
 
 // createChapterDialogInline template
@@ -251,94 +304,6 @@ Template.createBlockDialogInline.events({
       }, function (error, section){
         if (! error) {
           Session.set('selectedNode', section);
-          Session.set('showCreateBlockDialog', false);
-        } else {
-          console.log(error);
-        }
-      });
-    }
-  }
-  
-});
-
-// createChapterDialog template
-
-Template.createChapterDialog.events({
-  
-  'click .cancel': function (event, template) {
-    Session.set('showCreateChapterDialog', false);
-  },
-  
-  'click .save': function (event, template) {
-    var title = template.find('.title').value;
-    
-    if (title.length) {
-      Meteor.call('createChapter', {
-        title: title,
-        parentId: Session.get('currentCourse')
-      }, function (error, chapter){
-        if (! error) {
-          Session.set('selectedNode', chapter);
-          Session.set('showCreateChapterDialog', false);
-        } else {
-          console.log(error);
-        }
-      });
-    }
-  }
-  
-});
-
-// createSectionDialog template
-
-Template.createSectionDialog.events({
-  
-  'click .cancel': function (event, template) {
-    Session.set('showCreateSectionDialog', false);
-  },
-  
-  'click .save': function (event, template) {
-    var title = template.find('.title').value;
-    var parent = Session.get('selectedNode') || Session.get('currentCourse');
-    
-    if (title.length) {
-      Meteor.call('createSection', {
-        title: title,
-        parentId: parent
-      }, function (error, section){
-        if (! error) {
-          Session.set('selectedNode', section);
-          Session.set('showCreateSectionDialog', false);
-        } else {
-          console.log(error);
-        }
-      });
-    }
-  }
-  
-});
-
-// createSectionDialog template
-
-Template.createBlockDialog.events({
-  
-  'click .cancel': function (event, template) {
-    Session.set('showCreateBlockDialog', false);
-  },
-  
-  'click .save': function (event, template) {
-    var title = template.find('.title').value;
-    var body = template.find('.body').value;
-    var parent = Session.get('selectedNode');
-    
-    if (body.length) {
-      Meteor.call('createBlock', {
-        title: title,
-        body: body,
-        parentId: parent
-      }, function (error, block){
-        if (! error) {
-          Session.set('selectedNode', block);
           Session.set('showCreateBlockDialog', false);
         } else {
           console.log(error);
