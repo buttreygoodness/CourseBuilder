@@ -141,7 +141,9 @@
       {{else}}
         {{#if showCreateBlockDialog}}
           <h3>{{title}}</h3>
-          {{#if body}}<p>{{body}}</p>{{/if}}
+          {{#if body}}
+            {{#markdown}}{{body}}{{/markdown}}
+          {{/if}}
           {{> createBlockDialogInline}}
         {{else}}
           <h3>{{title}}
@@ -149,12 +151,16 @@
             <a href="#" class="btn btn-mini removeSection">Remove</a>
             <a href="#" class="btn btn-mini createBlock">Add Block</a>
           </h3>
-          {{#if body}}<p>{{body}}</p>{{/if}}
+          {{#if body}}
+            {{#markdown}}{{body}}{{/markdown}}
+          {{/if}}
         {{/if}}
       {{/if}}
     {{else}}
       <h3>{{title}}</h3>
-      {{#if body}}<p>{{body}}</p>{{/if}}
+      {{#if body}}
+        {{#markdown}}{{body}}{{/markdown}}
+      {{/if}}
     {{/if}}
   {{/with}}
 </template>
@@ -166,18 +172,15 @@
     {{#if showEditBlockDialog}}
       {{> editBlockDialogInline}}
     {{else}}
-      <h4>{{title}}</h4>
-      <p>{{body}}</p>
+      {{#if title}}<h4>{{title}}</h4>{{/if}}
+      {{#markdown}}{{body}}{{/markdown}}
       {{> blockControls}}
     {{/if}}
     
   {{else}}
-    <h4>{{title}}</h4>
-    <p>{{body}}</p>
+    {{#if title}}<h4>{{title}}</h4>{{/if}}
+    {{#markdown}}{{body}}{{/markdown}}
   {{/if}}
-  <div>
-
-  </div>
 </template>
 
 <!-- course_controls -->
