@@ -101,10 +101,16 @@
       {{#if showEditChapterDialog}}
         {{> editChapterDialogInline}}
       {{else}}
-        <h2>{{title}} <a href="#" class="btn btn-mini editSection">Edit</a><a href="#" class="btn btn-mini createSection">Add Section</a></h2>
-      {{/if}}
-      {{#if showCreateSectionDialog}}
-        {{> createSectionDialogInline}}
+        {{#if showCreateSectionDialog}}
+          <h2>{{title}}</h2>
+          {{> createSectionDialogInline}}
+        {{else}}
+        <h2>{{title}} 
+          <a href="#" class="btn btn-mini editChapter">Edit</a>
+          <a href="#" class="btn btn-mini removeChapter">Remove</a>
+          <a href="#" class="btn btn-mini createSection">Add Section</a>
+        </h2>
+        {{/if}}
       {{/if}}
     {{else}}
       <h2>{{title}}</h2>
@@ -116,10 +122,7 @@
 
 <template name="module_section">
   <section class="section" id="{{_id}}">
-    <h3>{{title}} {{#if selected}}<span class="muted">{{_id}}</span> {{> sectionControls}}{{/if}}</h3>
-    {{#if showCreateBlockDialog}}
-      {{> createBlockDialogInline}}
-    {{/if}}
+    {{> sectionControls}}
     {{#if anyBlocks}}
       {{#each blocks}}
         {{> block_text}}
@@ -128,12 +131,52 @@
   </section>
 </template>
 
+<!-- section_controls -->
+
+<template name="sectionControls">
+  {{#with section}}
+    {{#if selected}}
+      {{#if showEditSectionDialog}}
+        {{> editSectionDialogInline}}
+      {{else}}
+        {{#if showCreateBlockDialog}}
+          <h3>{{title}}</h3>
+          {{#if body}}<p>{{body}}</p>{{/if}}
+          {{> createBlockDialogInline}}
+        {{else}}
+          <h3>{{title}}
+            <a href="#" class="btn btn-mini editSection">Edit</a>
+            <a href="#" class="btn btn-mini removeSection">Remove</a>
+            <a href="#" class="btn btn-mini createBlock">Add Block</a>
+          </h3>
+          {{#if body}}<p>{{body}}</p>{{/if}}
+        {{/if}}
+      {{/if}}
+    {{else}}
+      <h3>{{title}}</h3>
+      {{#if body}}<p>{{body}}</p>{{/if}}
+    {{/if}}
+  {{/with}}
+</template>
+
 <!-- block_text -->
 
 <template name="block_text">
-  <div>
+  {{#if selected}}
+    {{#if showEditBlockDialog}}
+      {{> editBlockDialogInline}}
+    {{else}}
+      <h4>{{title}}</h4>
+      <p>{{body}}</p>
+      {{> blockControls}}
+    {{/if}}
+    
+  {{else}}
     <h4>{{title}}</h4>
     <p>{{body}}</p>
+  {{/if}}
+  <div>
+
   </div>
 </template>
 
@@ -141,25 +184,17 @@
 
 <template name="courseControls">
   <a href="#" class="btn btn-mini createChapter">Add Chapter</a>
-  <a href="#" class="btn btn-mini createSection">Add Section</a>
-  <a href="#" class="btn btn-mini">Add Block</a>
-</template>
-
-<!-- section_controls -->
-
-<template name="sectionControls">
-  {{#if showCreateBlockDialog}}
-    {{> createBlockDialogInline}}
-  {{else}}
-    <a href="#" class="btn btn-mini edit">Edit</a>
-    <a href="#" class="btn btn-mini createBlock">Add Block</a>
-  {{/if}}
+  <!--
+    <a href="#" class="btn btn-mini createSection">Add Section</a>
+    <a href="#" class="btn btn-mini">Add Block</a> 
+  -->
 </template>
 
 <!-- block_controls -->
 
 <template name="blockControls">
-  <a href="#" class="btn btn-mini edit">Edit Block</a>
+  <a href="#" class="btn btn-mini editBlock">Edit</a>
+  <a href="#" class="btn btn-mini removeBlock">Remove</a>
 </template>
 
 <!-- createChapterDialogInline -->
@@ -209,7 +244,8 @@
     <div class="alert alert-error">{{error}}</div>
     {{/if}}
   
-    <input type="text" class="title span5" placeholder="Enter a section title">
+    <input type="text" class="title span5" placeholder="Enter a title">
+    <textarea class="body span5" placeholder="Enter some body copy (optional)"></textarea>
   
     <div class="btn-group pull-right">
       <a href="#" class="btn cancel">Cancel</a>
@@ -219,7 +255,27 @@
   
 </template>
 
-<!-- createSectionDialogInline -->
+<!-- editSectionDialogInline -->
+
+<template name="editSectionDialogInline">
+  
+  <div class="inline-form">
+    {{#if error}}
+    <div class="alert alert-error">{{error}}</div>
+    {{/if}}
+  
+    <input type="text" class="title span5" placeholder="Enter a section title" value="{{title}}">
+    <textarea class="body span5" placeholder="Enter some body copy.">{{body}}</textarea>
+  
+    <div class="btn-group pull-right">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary save">Save</a>
+    </div>
+  </div>
+  
+</template>
+
+<!-- createBlockDialogInline -->
 
 <template name="createBlockDialogInline">
   
@@ -234,6 +290,26 @@
     <div class="btn-group pull-right">
       <a href="#" class="btn cancel">Cancel</a>
       <a href="#" class="btn btn-primary save">Add Block</a>
+    </div>
+  </div>
+  
+</template>
+
+<!-- editBlockDialogInline -->
+
+<template name="editBlockDialogInline">
+  
+  <div class="inline-form">
+    {{#if error}}
+    <div class="alert alert-error">{{error}}</div>
+    {{/if}}
+    
+    <input type="text" class="title span5" placeholder="Enter a title (optional)" value="{{title}}">
+    <textarea class="body span5" placeholder="Enter some body copy.">{{body}}</textarea>
+  
+    <div class="btn-group pull-right">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary save">Save</a>
     </div>
   </div>
   

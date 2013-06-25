@@ -5,7 +5,9 @@ Template.course.created = function () {
   Session.set('showCreateChapterDialog', null);
   Session.set('showEditChapterDialog', null);
   Session.set('showCreateSectionDialog', null);
+  Session.set('showEditSectionDialog', null);
   Session.set('showCreateBlockDialog', null);
+  Session.set('showEditBlockDialog', null);
 }
 
 var resetDialogs = function () {
@@ -107,13 +109,24 @@ Template.chapterControls.events({
   
   'click .createSection': function (event, template) {
     event.preventDefault();
+    Session.set('showEditChapterDialog', false);
     Session.set('showCreateSectionDialog', true);
   },
   
-  'click .editSection': function (event, template) {
+  'click .editChapter': function (event, template) {
     event.preventDefault();
     console.log('chapterControls.editChapter');
     Session.set('showEditChapterDialog', true);
+  },
+  
+  'click .removeChapter': function (event, template) {
+    event.preventDefault();
+    var confirmation = confirm("Are you sure you want to delete this element?");
+    if (confirmation === true) {
+      Meteor.call('removeNode', this._id);
+    } else {
+      return false;
+    }
   }
   
 });
@@ -122,8 +135,20 @@ Template.chapterControls.events({
 
 Template.sectionControls.helpers({
   
+  showEditSectionDialog: function () {
+    return Session.get('showEditSectionDialog') && Session.get('selectedNode') === this._id;
+  },
+  
   showCreateBlockDialog: function () {
     return Session.get('showCreateBlockDialog') && Session.get('selectedNode') === this._id;
+  },
+  
+  section: function () {
+    return Modules.findOne(this._id);
+  },
+  
+  selected: function () {
+    return Session.get('selectedNode') === this._id;
   }
   
 });
@@ -133,6 +158,22 @@ Template.sectionControls.events({
   'click .createBlock': function (event, template) {
     event.preventDefault();
     Session.set('showCreateBlockDialog', true);
+  },
+  
+  'click .editSection': function (event, template) {
+    event.preventDefault();
+    Session.set('showEditSectionDialog', true);
+    console.log('sectionControls.editSection');
+  },
+  
+  'click .removeSection': function (event, template) {
+    event.preventDefault();
+    var confirmation = confirm("Are you sure you want to delete this element?");
+    if (confirmation === true) {
+      Meteor.call('removeNode', this._id);
+    } else {
+      return false;
+    }
   }
   
 });
@@ -192,6 +233,46 @@ Template.module_section.events({
     Session.set('selectedNode', this._id);
   }
 
+});
+
+Template.block_text.helpers({
+  
+  selected: function () {
+    return Session.get('selectedNode') === this._id;
+  },
+  
+  showEditBlockDialog : function () {
+    return Session.get('showEditBlockDialog') && Session.get('selectedNode') === this._id;
+  }
+  
+});
+
+Template.block_text.events({
+  
+  'click': function (event, template) {
+    event.preventDefault();
+    Session.set('selectedNode', this._id);
+  }
+  
+});
+
+Template.blockControls.events({
+  
+  'click .editBlock': function (event, template) {
+    event.preventDefault();
+    Session.set('showEditBlockDialog', true);
+  },
+  
+  'click .removeBlock': function (event, template) {
+    event.preventDefault();
+    var confirmation = confirm("Are you sure you want to delete this element?");
+    if (confirmation === true) {
+      Meteor.call('removeNode', this._id);
+    } else {
+      return false;
+    }
+  }
+  
 });
 
 // editChapterDialogInline template
@@ -262,11 +343,13 @@ Template.createSectionDialogInline.events({
   'click .save': function (event, template) {
     event.preventDefault();
     var title = template.find('.title').value;
+    var body = template.find('.body').value;
     var parent = Session.get('selectedNode') || Session.get('currentCourse');
     
     if (title.length) {
       Meteor.call('createSection', {
         title: title,
+        body: body,
         parentId: parent
       }, function (error, section){
         if (! error) {
@@ -279,6 +362,34 @@ Template.createSectionDialogInline.events({
     }
   }
   
+});
+
+// editChapterDialogInline template
+
+Template.editSectionDialogInline.events({
+  'click .cancel': function (event, template) {
+    event.preventDefault();
+    Session.set('showEditSectionDialog', null);
+  },
+  
+  'click .save': function (event, template) {
+    event.preventDefault();
+    var title = template.find('.title').value;
+    var body = template.find('.body').value;
+    
+    if (title.length) {
+      Meteor.call('updateSection', {
+        title: title,
+        body: body,
+        _id: this._id
+      }, function (error, section) {
+        if (! error) {
+          Session.set('selectedNode', section);
+          Session.set('showEditSectionDialog', null);
+        }
+      });
+    }
+  }
 });
 
 // createBlockDialogInline template
@@ -296,7 +407,7 @@ Template.createBlockDialogInline.events({
     var body = template.find('.body').value;
     var parent = Session.get('selectedNode') || Session.get('currentCourse');
     
-    if (title.length) {
+    if (body.length) {
       Meteor.call('createBlock', {
         title: title,
         body: body,
@@ -305,6 +416,38 @@ Template.createBlockDialogInline.events({
         if (! error) {
           Session.set('selectedNode', section);
           Session.set('showCreateBlockDialog', false);
+        } else {
+          console.log(error);
+        }
+      });
+    }
+  }
+  
+});
+
+// editBlockDialogInline template
+
+Template.editBlockDialogInline.events({
+  
+  'click .cancel': function (event, template) {
+    event.preventDefault();
+    Session.set('showEditBlockDialog', false);
+  },
+  
+  'click .save': function (event, template) {
+    event.preventDefault();
+    var title = template.find('.title').value;
+    var body = template.find('.body').value;
+    
+    if (body.length) {
+      Meteor.call('updateBlock', {
+        title: title,
+        body: body,
+        _id: this._id
+      }, function (error, section){
+        if (! error) {
+          Session.set('selectedNode', section);
+          Session.set('showEditBlockDialog', false);
         } else {
           console.log(error);
         }
