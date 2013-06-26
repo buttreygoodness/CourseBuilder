@@ -51,7 +51,8 @@
 <template name="toc_chapter">
   <div class="accordion-group">
     <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#sidebarAccordion" href="#collapse{{_id}}" style="text-decoration: none;">
+      <!-- remove data-parent to prevent default toggle behavior -->
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="" href="#collapse{{_id}}" style="text-decoration: none;">
         {{title}}
         {{#if anySections}}
         <div class="pull-right">
@@ -61,7 +62,7 @@
       </a> 
     </div>
     {{#if anySections}}
-    <div id="collapse{{_id}}" class="accordion-body collapse">
+    <div id="collapse{{_id}}" class="accordion-body collapse in">
       <div class="accordion-inner">
         {{#each sections}}
           {{> toc_section}}
@@ -99,7 +100,7 @@
   {{#with chapter}}
     {{#if selected}}
       {{#if showEditChapterDialog}}
-        {{> editChapterDialogInline}}
+        <h2>{{> editChapterDialogInline}}</h2>
       {{else}}
         {{#if showCreateSectionDialog}}
           <h2>{{title}}</h2>
@@ -137,7 +138,7 @@
   {{#with section}}
     {{#if selected}}
       {{#if showEditSectionDialog}}
-        {{> editSectionDialogInline}}
+        <h3>{{> editSectionDialogInline}}</h3>
       {{else}}
         {{#if showCreateBlockDialog}}
           <h3>{{title}}</h3>
@@ -168,6 +169,7 @@
 <!-- block_text -->
 
 <template name="block_text">
+  <article class="block">
   {{#if selected}}
     {{#if showEditBlockDialog}}
       {{> editBlockDialogInline}}
@@ -181,6 +183,7 @@
     {{#if title}}<h4>{{title}}</h4>{{/if}}
     {{#markdown}}{{body}}{{/markdown}}
   {{/if}}
+  </article>
 </template>
 
 <!-- course_controls -->

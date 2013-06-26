@@ -5,7 +5,8 @@
       "font-awesome": {},
       "router": {},
       "accounts-ui-bootstrap-dropdown": {},
-      "x-editable-bootstrap": {}
+      "x-editable-bootstrap": {},
+      "holder": {}
     },
     "packages": {
       "font-awesome": {
@@ -27,6 +28,11 @@
         "git": "https://github.com/nate-strauser/meteor-x-editable-bootstrap.git",
         "tag": "v1.4.4",
         "commit": "d6852784a73f417710cbd58f42d97389dfbf37a3"
+      },
+      "holder": {
+        "git": "https://github.com/Dsyko/meteor-holder",
+        "tag": "v0.1.9",
+        "commit": "081a706bc39ed7b5bd8a115c8fc480378e2cb81d"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

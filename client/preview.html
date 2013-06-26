@@ -15,7 +15,7 @@
       {{#with course}}
         <div class="hero-unit">
           <h1 id="{{title}}">{{title}}</h1>
-          <p>{{description}}</p>
+          {{#markdown}}{{description}}{{/markdown}}
         </div>
         {{#each chapters}}
         <section class="chapter" id="{{_id}}" name="{{_id}}">
@@ -28,7 +28,7 @@
             {{#each blocks}}
             <article>
               <h4>{{title}}</h4>
-              <p>{{body}}</p>
+              {{#markdown}}{{body}}{{/markdown}}
             </article>
             {{/each}}
           </section>

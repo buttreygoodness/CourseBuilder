@@ -33,7 +33,7 @@ Template.createCourseDialog.events({
     var title = template.find('.title').value;
     var description = template.find('.description').value;
     
-    if (title.length && description.length) {
+    if (title.length) {
       Meteor.call('createCourse', {
         title: title,
         description: description
