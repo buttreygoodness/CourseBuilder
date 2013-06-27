@@ -41,7 +41,8 @@ Template.createCourseDialog.events({
         if (error) {
           console.error(error.message);
         } else {
-          Session.set('showCreateCourseDialog', false);
+          //Session.set('showCreateCourseDialog', false);
+          Meteor.Router.to( '/courses/' + course );
         }
       });
     } else {

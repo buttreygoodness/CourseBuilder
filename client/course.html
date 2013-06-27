@@ -4,7 +4,11 @@
       {{#with course}}
         <div class="row">
           <div class="span12">
-            <h1>{{title}} <span class="muted">{{_id}}</span>  {{> courseControls}}</h1>
+            {{#if showEditCourseDialog}}
+              {{> editCourseDialogInline}}
+            {{else}}
+              <h1>{{title}} {{> courseControls}}</h1>
+            {{/if}}
           </div>
         </div>
         <div class="row">
@@ -21,6 +25,12 @@
           <div class="span9">
             {{#if showCreateChapterDialog}}
               {{> createChapterDialogInline}}
+            {{/if}}
+            {{#if showCreateSectionDialog}}
+              {{> createSectionDialogInline}}
+            {{/if}}
+            {{#if showCreateBlockDialog}}
+              {{> createBlockDialogInline}}
             {{/if}}
             {{#if anySections}}
               {{#each sections}}
@@ -44,6 +54,15 @@
       {{/with}}
     {{/if}}
   </div>
+</template>
+
+<!-- course_controls -->
+
+<template name="courseControls">
+  <a href="#" class="btn btn-mini edit">Edit</a>
+  <a href="#" class="btn btn-mini createChapter">Add Chapter</a>
+  <a href="#" class="btn btn-mini createSection">Add Section</a>
+  <a href="#" class="btn btn-mini createBlock">Add Text</a> 
 </template>
 
 <!-- toc_chapter -->
@@ -150,7 +169,7 @@
           <h3>{{title}}
             <a href="#" class="btn btn-mini editSection">Edit</a>
             <a href="#" class="btn btn-mini removeSection">Remove</a>
-            <a href="#" class="btn btn-mini createBlock">Add Block</a>
+            <a href="#" class="btn btn-mini createBlock">Add Text</a>
           </h3>
           {{#if body}}
             {{#markdown}}{{body}}{{/markdown}}
@@ -186,21 +205,35 @@
   </article>
 </template>
 
-<!-- course_controls -->
-
-<template name="courseControls">
-  <a href="#" class="btn btn-mini createChapter">Add Chapter</a>
-  <!--
-    <a href="#" class="btn btn-mini createSection">Add Section</a>
-    <a href="#" class="btn btn-mini">Add Block</a> 
-  -->
-</template>
-
 <!-- block_controls -->
 
 <template name="blockControls">
   <a href="#" class="btn btn-mini editBlock">Edit</a>
   <a href="#" class="btn btn-mini removeBlock">Remove</a>
+</template>
+
+<!-- editCourseDialogInline -->
+
+<template name="editCourseDialogInline">
+  
+  <div class="inline-form">
+    {{#if error}}
+    <div class="alert alert-error">{{error}}</div>
+    {{/if}}
+    <div>
+      <input type="text" class="title span5" placeholder="Enter a course title" value="{{title}}">
+    </div>
+    <div id="name">
+      <textarea class="description span5" placeholder="Enter a description (optional)">{{description}}</textarea>
+    </div>
+    
+  
+    <div class="btn-group">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary save">Save</a>
+    </div>
+  </div>
+  
 </template>
 
 <!-- createChapterDialogInline -->
@@ -295,7 +328,7 @@
   
     <div class="btn-group pull-right">
       <a href="#" class="btn cancel">Cancel</a>
-      <a href="#" class="btn btn-primary save">Add Block</a>
+      <a href="#" class="btn btn-primary save">Add Text</a>
     </div>
   </div>
   

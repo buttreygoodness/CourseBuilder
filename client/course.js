@@ -8,6 +8,7 @@ Template.course.created = function () {
   Session.set('showEditSectionDialog', null);
   Session.set('showCreateBlockDialog', null);
   Session.set('showEditBlockDialog', null);
+  Session.set('showEditCourseDialog', null);
 }
 
 var resetDialogs = function () {
@@ -50,6 +51,10 @@ Template.course.helpers({
   
   showCreateBlockDialog: function () {
     return Session.get('showCreateBlockDialog');
+  },
+  
+  showEditCourseDialog: function () {
+    return Session.get('showEditCourseDialog');
   }
   
 });
@@ -79,6 +84,16 @@ Template.courseControls.events({
   'click .createSection': function (event, template) {
     event.preventDefault();
     Session.set('showCreateSectionDialog', true);
+  },
+  
+  'click .createBlock': function (event, template) {
+    event.preventDefault();
+    Session.set('showCreateBlockDialog', true);
+  },
+  
+  'click .edit': function (event, template) {
+    event.preventDefault();
+    Session.set('showEditCourseDialog', true);
   }
   
 });
@@ -448,6 +463,38 @@ Template.editBlockDialogInline.events({
         if (! error) {
           Session.set('selectedNode', section);
           Session.set('showEditBlockDialog', false);
+        } else {
+          console.log(error);
+        }
+      });
+    }
+  }
+  
+});
+
+// editBlockDialogInline template
+
+Template.editCourseDialogInline.events({
+  
+  'click .cancel': function (event, template) {
+    event.preventDefault();
+    Session.set('showEditCourseDialog', false);
+  },
+  
+  'click .save': function (event, template) {
+    event.preventDefault();
+    var title = template.find('.title').value;
+    var description = template.find('.description').value;
+    var course_id = Session.get('currentCourse');
+    
+    if (title.length) {
+      Meteor.call('updateCourse', {
+        title: title,
+        description: description,
+        _id: this._id
+      }, function (error, course){
+        if (! error) {
+          Session.set('showEditCourseDialog', false);
         } else {
           console.log(error);
         }
