@@ -54,9 +54,15 @@ Template.course.helpers({
   },
   
   showEditCourseDialog: function () {
-    return Session.get('showEditCourseDialog');
+    return Session.get('showEditCourseDialog') && Session.get('selectedNode') === null;
   }
   
+});
+
+Template.course.events({
+  'click h1': function (event, template) {
+    Session.set('selectedNode', null);
+  }
 });
 
 Template.toc_chapter.helpers({
