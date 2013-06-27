@@ -20,7 +20,12 @@ Template.home.events({
   },
   
   'click .removeCourse': function (event, template) {
-    Courses.remove(this._id);
+    var confirmation = confirm("Are you sure you want to delete this course?");
+    if (confirmation === true) {
+      Courses.remove(this._id);
+    } else {
+      return false;
+    }
   }
 });
 
@@ -41,7 +46,7 @@ Template.createCourseDialog.events({
         if (error) {
           console.error(error.message);
         } else {
-          //Session.set('showCreateCourseDialog', false);
+          Session.set('showCreateCourseDialog', false);
           Meteor.Router.to( '/courses/' + course );
         }
       });
