@@ -1,0 +1,33 @@
+<!-- section_controls -->
+
+<template name="sectionControls">
+  {{#with section}}
+    {{#if selected}}
+      {{#if showEditSectionDialog}}
+        <h3>{{> editSectionDialogInline}}</h3>
+      {{else}}
+        {{#if showCreateBlockDialog}}
+          <h3>{{title}}</h3>
+          {{#if body}}
+            {{#markdown}}{{body}}{{/markdown}}
+          {{/if}}
+          {{> createBlockDialogInline}}
+        {{else}}
+          <h3>{{title}}
+            <a href="#" class="btn btn-mini editSection">Edit</a>
+            <a href="#" class="btn btn-mini removeSection">Remove</a>
+            <a href="#" class="btn btn-mini createBlock">Add Text</a>
+          </h3>
+          {{#if body}}
+            {{#markdown}}{{body}}{{/markdown}}
+          {{/if}}
+        {{/if}}
+      {{/if}}
+    {{else}}
+      <h3>{{title}}</h3>
+      {{#if body}}
+        {{#markdown}}{{body}}{{/markdown}}
+      {{/if}}
+    {{/if}}
+  {{/with}}
+</template>

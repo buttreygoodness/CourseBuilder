@@ -4,6 +4,6 @@ Template.toolbar.helpers({
   },
   
   course: function () {
-    return Courses.findOne(Session.get('currentCourse'));
+    return Modules.findOne(Session.get('currentCourse'));
   }
 })

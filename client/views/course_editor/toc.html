@@ -1,0 +1,34 @@
+<!-- toc_chapter -->
+
+<template name="toc_chapter">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <!-- remove data-parent to prevent default toggle behavior -->
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="" href="#collapse{{_id}}" style="text-decoration: none;">
+        {{title}}
+        {{#if anySections}}
+        <div class="pull-right">
+          <i class="icon-chevron-sign-down"></i>
+        </div>
+        {{/if}}
+      </a> 
+    </div>
+    {{#if anySections}}
+    <div id="collapse{{_id}}" class="accordion-body collapse in">
+      <div class="accordion-inner">
+        {{#each sections}}
+          {{> toc_section}}
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</template>
+
+<!-- toc_section -->
+
+<template name="toc_section">
+  <div>
+    <a href="#" class="toc_section" style="margin-left: 10px;">{{title}}</a>
+  </div>
+</template>

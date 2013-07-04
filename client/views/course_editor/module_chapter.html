@@ -1,0 +1,12 @@
+<!-- module_chapter -->
+
+<template name="module_chapter">
+  <section class="chapter" id="{{_id}}">
+    {{> chapterControls}}
+    {{#if anySections}}
+      {{#each sections}}
+        {{> module_section}}
+      {{/each}}
+    {{/if}}
+  </section>
+</template>

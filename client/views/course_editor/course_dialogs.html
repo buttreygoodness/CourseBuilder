@@ -1,0 +1,23 @@
+<!-- editCourseDialogInline -->
+
+<template name="editCourseDialogInline">
+  
+  <div class="inline-form">
+    {{#if error}}
+    <div class="alert alert-error">{{error}}</div>
+    {{/if}}
+    <div>
+      <input type="text" class="title span5" placeholder="Enter a course title" value="{{title}}">
+    </div>
+    <div id="name">
+      <textarea class="description span5" placeholder="Enter a description (optional)">{{description}}</textarea>
+    </div>
+    
+  
+    <div class="btn-group">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary save">Save</a>
+    </div>
+  </div>
+  
+</template>

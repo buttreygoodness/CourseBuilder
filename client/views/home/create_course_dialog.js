@@ -1,34 +1,3 @@
-Template.home.greeting = "CourseBuilder";
-
-Template.home.helpers({
-  anyCourses: function () {
-    return Courses.find({owner: Meteor.userId()}).count() > 0;
-  },
-  
-  courses: function () {
-    return Courses.find({owner: Meteor.userId()});
-  },
-  
-  showCreateCourseDialog: function () {
-    return Session.get('showCreateCourseDialog');
-  }
-});
-
-Template.home.events({
-  'click #createCourseButton': function (event, template){
-    Session.set('showCreateCourseDialog', true);
-  },
-  
-  'click .removeCourse': function (event, template) {
-    var confirmation = confirm("Are you sure you want to delete this course?");
-    if (confirmation === true) {
-      Courses.remove(this._id);
-    } else {
-      return false;
-    }
-  }
-});
-
 Template.createCourseDialog.events({
   'click .cancel': function (event, template) {
     Session.set('showCreateCourseDialog', false);

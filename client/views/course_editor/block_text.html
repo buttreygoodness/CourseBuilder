@@ -1,0 +1,19 @@
+<!-- block_text -->
+
+<template name="block_text">
+  <article class="block">
+  {{#if selected}}
+    {{#if showEditBlockDialog}}
+      {{> editBlockDialogInline}}
+    {{else}}
+      {{#if title}}<h4>{{title}}</h4>{{/if}}
+      {{#markdown}}{{body}}{{/markdown}}
+      {{> blockControls}}
+    {{/if}}
+    
+  {{else}}
+    {{#if title}}<h4>{{title}}</h4>{{/if}}
+    {{#markdown}}{{body}}{{/markdown}}
+  {{/if}}
+  </article>
+</template>

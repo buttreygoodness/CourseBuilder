@@ -1,0 +1,57 @@
+<template name="course">
+  <div class="container">
+    {{#if course}}
+      {{#with course}}
+        <div class="row">
+          <div class="span12">
+            {{#if showEditCourseDialog}}
+              {{> editCourseDialogInline}}
+            {{else}}
+              <h1>{{title}} {{> courseControls}}</h1>
+            {{/if}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="span3">
+            {{#if anyChapters}}
+              <div class="accordion" id="sidebarAccordion" style="margin-top: 20px;">
+                {{#each chapters}}
+                  {{> toc_chapter}}
+                {{/each}}
+              </div>
+            {{/if}}
+          </div>
+        
+          <div class="span9">
+            {{#if showCreateChapterDialog}}
+              {{> createChapterDialogInline}}
+            {{/if}}
+            {{#if showCreateSectionDialog}}
+              {{> createSectionDialogInline}}
+            {{/if}}
+            {{#if showCreateBlockDialog}}
+              {{> createBlockDialogInline}}
+            {{/if}}
+            {{#if anySections}}
+              {{#each sections}}
+                {{> module_section}}
+              {{/each}}
+            {{/if}}
+            {{#if anyChapters}}
+              <div id="courseEditor">
+              {{#each chapters}}
+                {{> module_chapter}}
+              {{/each}}
+              </div>
+            {{else}}
+              <div class="well">
+                Get started by adding some chapters.
+              </div>
+            {{/if}}
+          </div>
+          
+        </div>
+      {{/with}}
+    {{/if}}
+  </div>
+</template>

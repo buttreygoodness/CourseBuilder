@@ -4,7 +4,7 @@ Template.preview.helpers({
   },
   
   course: function () {
-    return Courses.findOne(Session.get('currentCourse'));
+    return Modules.findOne(Session.get('currentCourse'));
   },
   
   chapters: function () {
@@ -19,4 +19,4 @@ Template.preview.helpers({
     return Modules.find({ parentId: this._id });
   }
   
-})
+});
