@@ -10,35 +10,33 @@
     <div class="row">
       <div class="span12">
         <h1>Home</h1>
-        <p>Welcome to {{greeting}}.</p>
+      </div>
+      <div class="span12">
+      {{#if currentUser}}
+        {{#if anyCourses}}
+          <table class="table table-hover">
+            <tr>
+              <th>Title</th>
+              <th style="width: 60px">Actions</th>
+            </tr>
+            {{#each courses}}
+            <tr>
+              <td>{{title}}&nbsp;&nbsp;&nbsp;<small>({{_id}})</small></td>
+              <td>
+                <a href="#" class="btn btn-mini removeCourse"><i class="icon-remove-sign"></i></a>
+                <a href="/courses/{{_id}}" class="btn btn-mini"><i class="icon-pencil"></i></a>
+              </td>
+            </tr>
+            {{/each}}
+          </table>
+        {{else}}
+          <p>You have yet to create a course.</p>
+        {{/if}}
+        <a href="#" id="createCourseButton" class="btn btn-large btn-primary pull-right"><i class="icon-book"></i> Create Course</a>
+      {{else}}
+        <p>Sign in to start!</p>
+      {{/if}}
       </div>
     </div>
-    {{#if currentUser}}
-      {{#if anyCourses}}
-        <h2>Your Courses</h2>
-        <table class="table table-hover">
-          <tr>
-            <th>Title</th>
-            <th style="width: 60px">Actions</th>
-          </tr>
-          {{#each courses}}
-          <tr>
-            <td>{{title}}&nbsp;&nbsp;&nbsp;<small>({{_id}})</small></td>
-            <td>
-              <a href="#" class="btn btn-mini removeCourse"><i class="icon-remove-sign"></i></a>
-              <a href="/courses/{{_id}}" class="btn btn-mini"><i class="icon-pencil"></i></a>
-            </td>
-          </tr>
-          {{/each}}
-        </table>
-      {{else}}
-      <div class="well">
-        You have no courses.
-      </div>
-      {{/if}}
-      <a href="#" id="createCourseButton" class="btn btn-large btn-primary pull-right"><i class="icon-book"></i> Create Course</a>
-    {{else}}
-      <p>Sign in to start!</p>
-    {{/if}}
   </div>
 </template>
