@@ -5,8 +5,8 @@
         <a class="brand" href="/">AutomaticManual</a>
         <ul class="nav">
           <li><a href="/">Home</a></li>
-          {{#if currentCourse}}
-            {{#with course}}
+          {{#if currentManual}}
+            {{#with manual}}
               <li><a href="/courses/{{_id}}/preview" target="_blank">Preview</a></li>
             {{/with}}
           {{/if}}

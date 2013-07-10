@@ -13,17 +13,17 @@ Template.course.created = function () {
 
 Template.course.helpers({
   
-  course: function () {
-    return Modules.findOne({_id: Session.get('currentCourse')});
+  manual: function () {
+    return Manuals.findOne({_id: Session.get('currentManual')});
   },
   
   anyChapters: function () {
-    var chapters = Modules.find({ parentId: Session.get('currentCourse'), module_type: 'am_chapter' });
+    var chapters = Modules.find({ parentId: Session.get('currentManual'), module_type: 'am_chapter' });
     return chapters.count() > 0;
   },
   
   chapters: function () {
-    return Modules.find({ parentId: Session.get('currentCourse'), module_type: 'am_chapter' });
+    return Modules.find({ parentId: Session.get('currentManual'), module_type: 'am_chapter' });
   },
   
   anySections: function (i, e) {
@@ -49,6 +49,15 @@ Template.course.helpers({
   
   showEditCourseDialog: function () {
     return Session.get('showEditCourseDialog') && Session.get('selectedNode') === null;
+  },
+  
+  getStarted: function () {
+    var chapter_count = Modules.find({ parentId: Session.get('currentManual'), module_type: 'am_chapter' }).count();
+    if (chapter_count > 0) {
+      return false;
+    }
+    
+    return !Session.get('showCreateChapterDialog');
   }
   
 });

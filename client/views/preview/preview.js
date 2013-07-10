@@ -1,14 +1,14 @@
 Template.preview.helpers({
   currentCourse: function () {
-    return Session.get('currentCourse');
+    return Session.get('currentManual');
   },
   
   course: function () {
-    return Modules.findOne(Session.get('currentCourse'));
+    return Manuals.findOne(Session.get('currentManual'));
   },
   
   chapters: function () {
-    return Modules.find({ parentId: Session.get('currentCourse') });
+    return Modules.find({ parentId: Session.get('currentManual') });
   },
   
   sections: function () {

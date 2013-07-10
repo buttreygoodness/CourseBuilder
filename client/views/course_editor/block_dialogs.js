@@ -1,5 +1,9 @@
 // createBlockDialogInline template
 
+Template.createBlockDialogInline.rendered = function () {
+  this.find('.title').focus();
+}
+
 Template.createBlockDialogInline.events({
   
   'click .cancel': function (event, template) {
@@ -32,6 +36,10 @@ Template.createBlockDialogInline.events({
 });
 
 // editBlockDialogInline template
+
+Template.editBlockDialogInline.rendered = function () {
+  this.find('.title').focus();
+}
 
 Template.editBlockDialogInline.events({
   

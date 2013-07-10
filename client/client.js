@@ -1,4 +1,4 @@
-Meteor.subscribe('courses');
+Meteor.subscribe('manuals');
 Meteor.subscribe('modules');
 
 Meteor.startup(function () {

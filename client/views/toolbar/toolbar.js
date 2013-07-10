@@ -1,9 +1,9 @@
 Template.toolbar.helpers({
-  currentCourse: function () {
-    return Session.get('currentCourse');
+  currentManual: function () {
+    return Session.get('currentManual');
   },
   
-  course: function () {
-    return Modules.findOne(Session.get('currentCourse'));
+  manual: function () {
+    return Manuals.findOne(Session.get('currentManual'));
   }
 })

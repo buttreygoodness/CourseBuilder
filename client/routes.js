@@ -3,13 +3,14 @@
 Meteor.Router.add({
   '/': 'home',
   '/courses/:id': function(id) {
-    Session.set('currentCourse', id);
+    Session.set('currentManual', id);
     return 'course';
   },
   '/courses/:id/preview': function(id) {
-    Session.set('currentCourse', id);
+    Session.set('currentManual', id);
     return 'preview';
   },
+  '/loading': 'loading',
   '*': 'home'
 });
 

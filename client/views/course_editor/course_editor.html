@@ -1,7 +1,7 @@
 <template name="course">
   <div class="container">
-    {{#if course}}
-      {{#with course}}
+    {{#if manual}}
+      {{#with manual}}
         <div class="row">
           <div class="span12">
             {{#if showEditCourseDialog}}
@@ -43,10 +43,9 @@
                 {{> module_chapter}}
               {{/each}}
               </div>
-            {{else}}
-              <div class="well">
-                Get started by adding some chapters.
-              </div>
+            {{/if}}
+            {{#if getStarted}}
+              <p>Get started by adding some chapters.</p>
             {{/if}}
           </div>
           

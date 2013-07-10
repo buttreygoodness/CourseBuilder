@@ -1,5 +1,9 @@
 // editCourseDialogInline template
 
+Template.editCourseDialogInline.rendered = function () {
+  this.find('.title').focus();
+}
+
 Template.editCourseDialogInline.events({
   
   'click .cancel': function (event, template) {
@@ -11,7 +15,9 @@ Template.editCourseDialogInline.events({
     event.preventDefault();
     var title = template.find('.title').value;
     var description = template.find('.description').value;
-    var course_id = Session.get('currentCourse');
+    var course_id = Session.get('currentManual');
+    
+    console.log(this._id);
     
     if (title.length) {
       Meteor.call('updateCourse', {
