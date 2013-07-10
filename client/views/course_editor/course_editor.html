@@ -1,56 +1,63 @@
 <template name="course">
-  <div class="container">
-    {{#if manual}}
-      {{#with manual}}
-        <div class="row">
-          <div class="span12">
-            {{#if showEditCourseDialog}}
-              {{> editCourseDialogInline}}
-            {{else}}
-              <h1>{{title}} {{> courseControls}}</h1>
-            {{/if}}
-          </div>
-        </div>
-        <div class="row">
-          <div class="span3">
-            {{#if anyChapters}}
-              <div class="accordion" id="sidebarAccordion" style="margin-top: 20px;">
-                {{#each chapters}}
-                  {{> toc_chapter}}
-                {{/each}}
-              </div>
-            {{/if}}
-          </div>
+  
+  <div class="container-fluid">
+    
+
+
+  {{#if manual}}
+    {{#with manual}}
+
         
-          <div class="span9">
-            {{#if showCreateChapterDialog}}
-              {{> createChapterDialogInline}}
-            {{/if}}
-            {{#if showCreateSectionDialog}}
-              {{> createSectionDialogInline}}
-            {{/if}}
-            {{#if showCreateBlockDialog}}
-              {{> createBlockDialogInline}}
-            {{/if}}
-            {{#if anySections}}
-              {{#each sections}}
-                {{> module_section}}
-              {{/each}}
-            {{/if}}
-            {{#if anyChapters}}
-              <div id="courseEditor">
+        <div class="sidebar">
+          {{#if anyChapters}}
+            <div class="accordion" id="sidebarAccordion" style="margin-top: 20px;">
               {{#each chapters}}
-                {{> module_chapter}}
+                {{> toc_chapter}}
               {{/each}}
-              </div>
-            {{/if}}
-            {{#if getStarted}}
-              <p>Get started by adding some chapters.</p>
-            {{/if}}
-          </div>
-          
+            </div>
+          {{/if}}
         </div>
-      {{/with}}
-    {{/if}}
+        
+        <div class="content">
+          {{#if showEditCourseDialog}}
+            {{> editCourseDialogInline}}
+          {{else}}
+            <h1>{{title}} {{> courseControls}}</h1>
+          {{/if}}
+        <!-- </div> -->
+        
+        <!-- <div class="span9"> -->
+          {{#if showCreateChapterDialog}}
+            {{> createChapterDialogInline}}
+          {{/if}}
+          {{#if showCreateSectionDialog}}
+            {{> createSectionDialogInline}}
+          {{/if}}
+          {{#if showCreateBlockDialog}}
+            {{> createBlockDialogInline}}
+          {{/if}}
+          {{#if anySections}}
+            {{#each sections}}
+              {{> module_section}}
+            {{/each}}
+          {{/if}}
+          {{#if anyChapters}}
+            <div id="courseEditor">
+            {{#each chapters}}
+              {{> module_chapter}}
+            {{/each}}
+            </div>
+          {{/if}}
+          {{#if getStarted}}
+            <p>Get started by adding some chapters.</p>
+          {{/if}}
+        </div>
+        
+      </div>
+
+    {{/with}}
+  {{/if}}
+
   </div>
+    
 </template>
