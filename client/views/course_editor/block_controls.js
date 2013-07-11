@@ -13,6 +13,12 @@ Template.blockControls.events({
     } else {
       return false;
     }
+  },
+  
+  'click .cancel': function (event, template) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    Session.set('selectedNode', null);
   }
   
 });

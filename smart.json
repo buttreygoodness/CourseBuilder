@@ -3,7 +3,7 @@
     "font-awesome": {},
     "router": {},
     "accounts-ui-bootstrap-dropdown": {},
-    "x-editable-bootstrap": {},
-    "holder": {}
+    "holder": {},
+    "bootstrap-wysiwyg": {}
   }
 }

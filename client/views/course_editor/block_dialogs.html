@@ -21,19 +21,14 @@
 <!-- editBlockDialogInline -->
 
 <template name="editBlockDialogInline">
-  
-  <div class="inline-form">
-    {{#if error}}
-    <div class="alert alert-error">{{error}}</div>
-    {{/if}}
-    
-    <input type="text" class="title span5" placeholder="Enter a title (optional)" value="{{title}}">
-    <textarea class="body span5" placeholder="Enter some body copy.">{{body}}</textarea>
-  
-    <div class="btn-group pull-right">
-      <a href="#" class="btn cancel">Cancel</a>
-      <a href="#" class="btn btn-primary save">Save</a>
-    </div>
+  {{> blockTextToolbar}}
+
+  <div id="editor">
+    {{{body}}}
   </div>
-  
+
+  <div class="btn-group">
+    <a class="btn cancel">Cancel</a>
+    <a class="btn btn-primary save">Save</a>
+  </div>
 </template>

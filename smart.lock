@@ -5,8 +5,8 @@
       "font-awesome": {},
       "router": {},
       "accounts-ui-bootstrap-dropdown": {},
-      "x-editable-bootstrap": {},
-      "holder": {}
+      "holder": {},
+      "bootstrap-wysiwyg": {}
     },
     "packages": {
       "font-awesome": {
@@ -16,23 +16,23 @@
       },
       "router": {
         "git": "https://github.com/tmeasday/meteor-router.git",
-        "tag": "v0.5.1",
-        "commit": "32e377c7703bb119acccc859fc7296882903cbe7"
+        "tag": "v0.5.3",
+        "commit": "7bd3a1bdd1099625bb8b49406d9b8f961d6f4a17"
       },
       "accounts-ui-bootstrap-dropdown": {
         "git": "https://github.com/erobit/meteor-accounts-ui-bootstrap-dropdown.git",
         "tag": "v0.1.5",
         "commit": "e12b128f140caa2797720cbd5fae084de7810c6a"
       },
-      "x-editable-bootstrap": {
-        "git": "https://github.com/nate-strauser/meteor-x-editable-bootstrap.git",
-        "tag": "v1.4.5b",
-        "commit": "1a5ac4258d69bffeb48035bc263d88c034871de5"
-      },
       "holder": {
         "git": "https://github.com/Dsyko/meteor-holder",
         "tag": "v0.1.9",
         "commit": "081a706bc39ed7b5bd8a115c8fc480378e2cb81d"
+      },
+      "bootstrap-wysiwyg": {
+        "git": "https://github.com/mcrider/meteor-bootstrap-wysiwyg.git",
+        "tag": "v0.1.0",
+        "commit": "b9b1ffadb42b8bbfade08aaea10e4fbe890d21dd"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
