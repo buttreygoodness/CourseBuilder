@@ -13,10 +13,12 @@
           {{/if}}
           {{> createBlockDialogInline}}
         {{else}}
-          <h3>{{title}}
-            <a href="#" class="btn btn-mini editSection">Edit</a>
-            <a href="#" class="btn btn-mini removeSection">Remove</a>
-            <a href="#" class="btn btn-mini createBlock">Add Text</a>
+          <h3>{{title}}&nbsp;&nbsp;
+            <div class="btn-group">
+              <a href="#" class="btn removeSection">Remove</a>
+              <a href="#" class="btn createBlock">Add Text</a>
+              <a href="#" class="btn btn-primary editSection">Edit</a>
+            </div>
           </h3>
           {{#if body}}
             {{#markdown}}{{body}}{{/markdown}}

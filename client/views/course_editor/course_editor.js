@@ -63,7 +63,11 @@ Template.course.helpers({
 });
 
 Template.course.events({
-  'click h1': function (event, template) {
-    Session.set('selectedNode', null);
+  
+  'blur': function (event, template) {
+    console.log('clicked background');
+    //Session.set('selectedNode', null);
+    //event.stopPropagation();
   }
+
 });

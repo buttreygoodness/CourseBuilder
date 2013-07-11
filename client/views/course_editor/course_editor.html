@@ -1,5 +1,4 @@
 <template name="course">
-  
   <div class="container-fluid">
   {{#if manual}}
     {{#with manual}}
@@ -17,7 +16,7 @@
           {{#if showEditCourseDialog}}
             {{> editCourseDialogInline}}
           {{else}}
-            <h1>{{title}} {{> courseControls}}</h1>
+            <h1>{{title}}&nbsp;&nbsp;{{> courseControls}}</h1>
           {{/if}}
         <!-- </div> -->
         

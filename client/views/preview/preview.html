@@ -1,44 +1,46 @@
 <template name="preview">
-  <div class="container">
-    <div class="row">
-      <div class="span3 offset1">
-        <ul id="table-of-contents" class="nav nav-list affix-top" data-spy="affix" data-offset-top="40">
-          {{#each chapters}}
-          <li class=""><a href="#{{_id}}">{{title}}</a></li>
-          {{/each}}
-        </ul>
-      </div>
-      
-      <!-- begin course -->
-      
-      <div id="course" class="span7">
-      {{#with course}}
-        <div class="hero-unit">
-          <h1 id="{{title}}">{{title}}</h1>
-          {{#markdown}}{{description}}{{/markdown}}
+  <div id="am_preview">
+    <div class="container">
+      <div class="row">
+        <div class="span3 offset1">
+          <ul id="table-of-contents" class="nav nav-list affix-top" data-spy="affix" data-offset-top="40">
+            {{#each chapters}}
+            <li class=""><a href="#{{_id}}">{{title}}</a></li>
+            {{/each}}
+          </ul>
         </div>
-        {{#each chapters}}
-        <section class="chapter" id="{{_id}}" name="{{_id}}">
-          <div class="page-header">
-            <h2>{{title}}</h2>
+      
+        <!-- begin course -->
+      
+        <div id="course" class="span7">
+        {{#with course}}
+          <div class="hero-unit">
+            <h1 id="{{title}}">{{title}}</h1>
+            {{#markdown}}{{description}}{{/markdown}}
           </div>
-          {{#each sections}}
-          <section class="section">
-            <h3>{{title}}</h3>
-            {{#each blocks}}
-            <article>
-              {{{body}}}
-            </article>
+          {{#each chapters}}
+          <section class="chapter" id="{{_id}}" name="{{_id}}">
+            <div class="page-header">
+              <h2>{{title}}</h2>
+            </div>
+            {{#each sections}}
+            <section class="section">
+              <h3>{{title}}</h3>
+              {{#each blocks}}
+              <article>
+                {{{body}}}
+              </article>
+              {{/each}}
+            </section>
             {{/each}}
           </section>
           {{/each}}
-        </section>
-        {{/each}}
-      {{/with}}
+        {{/with}}
+        </div>
+      
+        <!-- end course -->
+      
       </div>
-      
-      <!-- end course -->
-      
     </div>
   </div>
 </template>
