@@ -7,13 +7,13 @@
       {{> editBlockDialogInline}}
     {{else}}
       {{#if title}}<h4>{{title}}</h4>{{/if}}
-      {{#markdown}}{{body}}{{/markdown}}
+      <span class="">{{{body}}}</span>
       {{> blockControls}}
     {{/if}}
     
   {{else}}
-    {{#if title}}<h4 class="editable">{{title}}</h4>{{/if}}
-    <span class="editable">{{#markdown}}{{body}}{{/markdown}}</span>
+    {{#if title}}<h4 class="">{{title}}</h4>{{/if}}
+    <span class="">{{{body}}}</span>
   {{/if}}
   </article>
 </template>

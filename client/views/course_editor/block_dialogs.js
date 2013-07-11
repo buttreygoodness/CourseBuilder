@@ -38,24 +38,29 @@ Template.createBlockDialogInline.events({
 // editBlockDialogInline template
 
 Template.editBlockDialogInline.rendered = function () {
-  this.find('.title').focus();
+  var editor = this.find('#editor');
+  $(editor).wysiwyg().focus();
 }
 
 Template.editBlockDialogInline.events({
   
   'click .cancel': function (event, template) {
     event.preventDefault();
+    event.stopImmediatePropagation();
+    
+    Session.set('selectedNode', null);
     Session.set('showEditBlockDialog', false);
   },
   
   'click .save': function (event, template) {
     event.preventDefault();
-    var title = template.find('.title').value;
-    var body = template.find('.body').value;
+    
+    // var title = template.find('.title').value;
+    var body = template.find('#editor').innerHTML;
     
     if (body.length) {
       Meteor.call('updateBlock', {
-        title: title,
+        // title: title,
         body: body,
         _id: this._id
       }, function (error, section){
@@ -67,6 +72,12 @@ Template.editBlockDialogInline.events({
         }
       });
     }
-  }
+  },
+  
+  // 'blur': function (event, template) {
+  //   event.preventDefault();
+  //   Session.set('selectedNode', null);
+  //   Session.set('showEditBlockDialog', false);
+  // }
   
 });
