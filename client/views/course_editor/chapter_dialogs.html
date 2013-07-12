@@ -21,17 +21,19 @@
 
 <template name="editChapterDialogInline">
   
-  <div class="inline-form">
-    {{#if error}}
+  <div class="editInline">
+    <form class="form-inline">
+      {{#if error}}
       <div class="alert alert-error">{{error}}</div>
-    {{/if}}
-  
-    <input type="text" class="title span5" placeholder="Enter a chapter title" value="{{title}}">
-  
-    <div class="btn-group pull-right">
-      <a href="#" class="btn cancel">Cancel</a>
-      <a href="#" class="btn btn-primary save">Save</a>
-    </div>
+      {{/if}}
+      
+      <input type="text" class="title span5" placeholder="Enter a chapter title" value="{{title}}">
+      
+      <div class="btn-group">
+        <button class="btn cancel">Cancel</button>
+        <button class="btn btn-primary save">Save</button>
+      </div>
+    </form>
   </div>
   
 </template>
