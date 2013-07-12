@@ -1,3 +1,7 @@
+Template.preview.rendered = function () {
+  $('#table-of-contents').affix();
+}
+
 Template.preview.helpers({
   currentCourse: function () {
     return Session.get('currentManual');
@@ -8,7 +12,7 @@ Template.preview.helpers({
   },
   
   chapters: function () {
-    return Modules.find({ parentId: Session.get('currentManual') });
+    return Modules.find({ parentId: Session.get('currentManual') }, {sort: {listposition: 1}});
   },
   
   sections: function () {

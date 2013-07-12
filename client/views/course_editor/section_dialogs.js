@@ -11,7 +11,7 @@ Template.createSectionDialogInline.events({
     event.preventDefault();
     var title = template.find('.title').value;
     // var body = template.find('.body').value;
-    var parent = Session.get('selectedNode') || Session.get('currentCourse');
+    var parent = Session.get('selectedNode') || Session.get('currentManual');
     
     if (title.length) {
       Meteor.call('createSection', {
@@ -20,7 +20,7 @@ Template.createSectionDialogInline.events({
         parentId: parent
       }, function (error, section){
         if (! error) {
-          Session.set('selectedNode', section);
+          Session.set('selectedNode', null);
           Session.set('showCreateSectionDialog', false);
         } else {
           console.log(error);
@@ -44,7 +44,7 @@ updateThisSection = function (event, template, id) {
       _id: id
     }, function (error, section) {
       if (! error) {
-        Session.set('selectedNode', section);
+        Session.set('selectedNode', null);
         Session.set('showEditChapterDialog', null);
       }
     });

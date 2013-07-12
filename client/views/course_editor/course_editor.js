@@ -11,6 +11,23 @@ Template.course.created = function () {
   Session.set('showEditCourseDialog', null);
 }
 
+Template.course.rendered = function () {
+  $('.sidebar').affix();
+
+  var elem = $(this.find('#sidebarAccordion'));
+  elem.sortable({
+    revert: 100,
+    update: function(event, ui) {
+      // build a new array items in the right order, and push them 
+      var chapters = $(event.target).children('.toc_chapter');
+      _.each(chapters, function(element, index, list) {
+        var id = $(element).data('id');
+        Modules.update({_id: id}, {$set: {listposition: index}});
+      });
+    }
+  });
+}
+
 Template.course.helpers({
   
   manual: function () {
@@ -23,7 +40,7 @@ Template.course.helpers({
   },
   
   chapters: function () {
-    return Modules.find({ parentId: Session.get('currentManual'), module_type: 'am_chapter' });
+    return Modules.find({ parentId: Session.get('currentManual'), module_type: 'am_chapter' }, {sort: {listposition: 1}});
   },
   
   anySections: function (i, e) {
@@ -62,12 +79,3 @@ Template.course.helpers({
   
 });
 
-Template.course.events({
-  
-  'blur': function (event, template) {
-    console.log('clicked background');
-    //Session.set('selectedNode', null);
-    //event.stopPropagation();
-  }
-
-});

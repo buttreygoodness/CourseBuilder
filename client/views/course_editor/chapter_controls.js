@@ -23,15 +23,14 @@ Template.chapterControls.helpers({
 Template.chapterControls.events({
   
   'click .createSection': function (event, template) {
-    event.preventDefault();
     Session.set('showEditChapterDialog', false);
     Session.set('showCreateSectionDialog', true);
+    return false;
   },
   
   'click .editChapter': function (event, template) {
-    event.preventDefault();
-    console.log('chapterControls.editChapter');
     Session.set('showEditChapterDialog', true);
+    return false;
   },
   
   'click .removeChapter': function (event, template) {

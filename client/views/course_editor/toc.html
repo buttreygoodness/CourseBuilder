@@ -1,7 +1,7 @@
 <!-- toc_chapter -->
 
 <template name="toc_chapter">
-  <div class="accordion-group">
+  <div class="accordion-group toc_chapter" data-id='{{_id}}' data-listposition='{{listposition}}'>
     <div class="accordion-heading">
       <!-- remove data-parent to prevent default toggle behavior -->
       <a class="accordion-toggle" data-toggle="collapse" data-parent="" href="#collapse{{_id}}" style="text-decoration: none;">
@@ -28,7 +28,7 @@
 <!-- toc_section -->
 
 <template name="toc_section">
-  <div>
+  <div class='toc_section'>
     <a href="#" class="toc_section" style="margin-left: 10px;">{{title}}</a>
   </div>
 </template>
