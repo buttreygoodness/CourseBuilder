@@ -8,7 +8,7 @@ Template.preview.helpers({
   },
   
   chapters: function () {
-    return Modules.find({ parentId: Session.get('currentManual') });
+    return Modules.find({ parentId: Session.get('currentManual') }, {sort: {listposition: 1}});
   },
   
   sections: function () {
