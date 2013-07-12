@@ -1,30 +1,30 @@
 // createBlockDialogInline template
 
 Template.createBlockDialogInline.rendered = function () {
-  this.find('.title').focus();
+  var editor = this.find('#editor');
+  $(editor).wysiwyg().focus();
 }
 
 Template.createBlockDialogInline.events({
   
   'click .cancel': function (event, template) {
-    event.preventDefault();
+    Session.set('selectedNode', null);
     Session.set('showCreateBlockDialog', false);
+    return false;
   },
   
   'click .save': function (event, template) {
     event.preventDefault();
-    var title = template.find('.title').value;
-    var body = template.find('.body').value;
-    var parent = Session.get('selectedNode') || Session.get('currentCourse');
+    var body = template.find('#editor').innerHTML;
+    var parent = Session.get('selectedNode') || Session.get('currentManual');
     
     if (body.length) {
       Meteor.call('createBlock', {
-        title: title,
         body: body,
         parentId: parent
       }, function (error, section){
         if (! error) {
-          Session.set('selectedNode', section);
+          Session.set('selectedNode', null);
           Session.set('showCreateBlockDialog', false);
         } else {
           console.log(error);

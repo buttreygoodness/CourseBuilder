@@ -4,6 +4,24 @@ Template.createChapterDialogInline.rendered = function () {
   this.find('.title').focus();
 }
 
+createThisChapter = function (event, template, id) {
+  var title = template.find('.title').value;
+  
+  if (title.length) {
+    Meteor.call('createChapter', {
+      title: title,
+      parentId: Session.get('currentManual')
+    }, function (error, chapter){
+      if (! error) {
+        Session.set('selectedNode', null);
+        Session.set('showCreateChapterDialog', false);
+      } else {
+        console.log(error);
+      }
+    });
+  }
+}
+
 Template.createChapterDialogInline.events({
   
   'click .cancel': function (event, template) {
@@ -12,21 +30,39 @@ Template.createChapterDialogInline.events({
   },
   
   'click .save': function (event, template) {
-    event.preventDefault();
-    var title = template.find('.title').value;
-    
-    if (title.length) {
-      Meteor.call('createChapter', {
-        title: title,
-        parentId: Session.get('currentManual')
-      }, function (error, chapter){
-        if (! error) {
-          Session.set('selectedNode', chapter);
-          Session.set('showCreateChapterDialog', false);
-        } else {
-          console.log(error);
-        }
-      });
+    // event.preventDefault();
+    // var title = template.find('.title').value;
+    // 
+    // if (title.length) {
+    //   Meteor.call('createChapter', {
+    //     title: title,
+    //     parentId: Session.get('currentManual')
+    //   }, function (error, chapter){
+    //     if (! error) {
+    //       Session.set('selectedNode', chapter);
+    //       Session.set('showCreateChapterDialog', false);
+    //     } else {
+    //       console.log(error);
+    //     }
+    //   });
+    // }
+    createThisChapter(event, template, this._id);
+    return false;
+  },
+  
+  'keypress .title': function (event, template) {
+    // press return
+    if (event.which === 13) {
+      createThisChapter(event, template, this._id);
+    }
+  },
+  
+  'keydown .title': function (event, template) {
+    // press escape
+    if (event.which === 27) {
+      Session.set('showCreateChapterDialog', null);
+      Session.set('selectedNode', null);
+      return false;
     }
   }
   
@@ -62,8 +98,8 @@ Template.editChapterDialogInline.events({
   },
   
   'click .save': function (event, template) {
-    event.preventDefault();
     updateThisChapter(event, template, this._id);
+    return false;
   },
   
   'keypress .title': function (event, template) {

@@ -1,3 +1,7 @@
+Template.preview.rendered = function () {
+  $('#table-of-contents').affix();
+}
+
 Template.preview.helpers({
   currentCourse: function () {
     return Session.get('currentManual');
