@@ -34,6 +34,22 @@ Template.createChapterDialogInline.events({
 
 // editChapterDialogInline template
 
+updateThis = function (event, template, id) {
+  var title = template.find('.title').value;
+  
+  if (title.length) {
+    Meteor.call('updateChapter', {
+      title: title,
+      _id: id
+    }, function (error, chapter) {
+      if (! error) {
+        Session.set('selectedNode', chapter);
+        Session.set('showEditChapterDialog', null);
+      }
+    });
+  }
+}
+
 Template.editChapterDialogInline.rendered = function () {
   this.find('.title').focus();
 }
@@ -46,20 +62,22 @@ Template.editChapterDialogInline.events({
   
   'click .save': function (event, template) {
     event.preventDefault();
-    var title = template.find('.title').value;
     
-    console.log(this._id);
-    
-    if (title.length) {
-      Meteor.call('updateChapter', {
-        title: title,
-        _id: this._id
-      }, function (error, chapter) {
-        if (! error) {
-          Session.set('selectedNode', chapter);
-          Session.set('showEditChapterDialog', null);
-        }
-      });
+    updateThis(event, template, this._id);
+  },
+  
+  'keypress .title': function (event, template) {
+    if (event.charCode === 13) {
+      updateThis(event, template, this._id);
     }
+  },
+  
+  'keydown .title': function (event, template) {
+    console.log(event.charCode);
+    if (event.charCode === 0) {
+      Session.set('showEditChapterDialog', null);
+      Session.set('selectedNode', null);
+    }
+    return false;
   }
 });
