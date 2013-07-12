@@ -11,6 +11,10 @@ Template.course.created = function () {
   Session.set('showEditCourseDialog', null);
 }
 
+Template.course.rendered = function () {
+  $('.sidebar').affix();
+}
+
 Template.course.helpers({
   
   manual: function () {
@@ -62,12 +66,3 @@ Template.course.helpers({
   
 });
 
-Template.course.events({
-  
-  'blur': function (event, template) {
-    console.log('clicked background');
-    //Session.set('selectedNode', null);
-    //event.stopPropagation();
-  }
-
-});
