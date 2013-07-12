@@ -34,7 +34,7 @@ Template.createChapterDialogInline.events({
 
 // editChapterDialogInline template
 
-updateThis = function (event, template, id) {
+updateThisChapter = function (event, template, id) {
   var title = template.find('.title').value;
   
   if (title.length) {
@@ -56,28 +56,30 @@ Template.editChapterDialogInline.rendered = function () {
 
 Template.editChapterDialogInline.events({
   'click .cancel': function (event, template) {
-    event.preventDefault();
+    Session.set('selectedNode', null);
     Session.set('showEditChapterDialog', null);
+    return false;
   },
   
   'click .save': function (event, template) {
     event.preventDefault();
-    
-    updateThis(event, template, this._id);
+    updateThisChapter(event, template, this._id);
   },
   
   'keypress .title': function (event, template) {
-    if (event.charCode === 13) {
-      updateThis(event, template, this._id);
+    // press return
+    if (event.which === 13) {
+      updateThisChapter(event, template, this._id);
     }
   },
   
   'keydown .title': function (event, template) {
-    console.log(event.charCode);
-    if (event.charCode === 0) {
-      Session.set('showEditChapterDialog', null);
+    // press escape
+    if (event.which === 27) {
+      Session.set('showEditSectionDialog', null);
       Session.set('selectedNode', null);
+      return false;
     }
-    return false;
   }
+  
 });
