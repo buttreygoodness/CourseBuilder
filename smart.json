@@ -4,6 +4,7 @@
     "router": {},
     "accounts-ui-bootstrap-dropdown": {},
     "holder": {},
-    "bootstrap-wysiwyg": {}
+    "bootstrap-wysiwyg": {},
+    "jquery-ui": {}
   }
 }

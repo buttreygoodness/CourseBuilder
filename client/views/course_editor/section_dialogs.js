@@ -1,5 +1,9 @@
 // createSectionDialogInline template
 
+Template.createSectionDialogInline.rendered = function () {
+  $(this.find('.title')).focus();
+}
+
 Template.createSectionDialogInline.events({
   
   'click .cancel': function (event, template) {
