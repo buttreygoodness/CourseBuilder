@@ -7,7 +7,11 @@
           <li><a href="/">Home</a></li>
           {{#if currentManual}}
             {{#with manual}}
-              <li><a href="/courses/{{_id}}/preview" target="_blank">Preview</a></li>
+              {{# if isPreview}}
+                <li><a href="/courses/{{_id}}">Editor</a></li>
+              {{else}}
+                <li><a href="/courses/{{_id}}/preview">Preview</a></li>
+              {{/if}}
             {{/with}}
           {{/if}}
         </ul>

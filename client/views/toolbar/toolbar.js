@@ -5,5 +5,9 @@ Template.toolbar.helpers({
   
   manual: function () {
     return Manuals.findOne(Session.get('currentManual'));
+  },
+  
+  isPreview: function () {
+    return Session.get('previewMode');
   }
 })

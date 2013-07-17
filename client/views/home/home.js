@@ -28,7 +28,7 @@ Template.home.events({
   'click .removeCourse': function (event, template) {
     var confirmation = confirm("Are you sure you want to delete this course?");
     if (confirmation === true) {
-      Modules.remove(this._id);
+      Manuals.remove(this._id);
     } else {
       return false;
     }
