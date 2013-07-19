@@ -3,11 +3,14 @@
 Meteor.Router.add({
   '/': 'home',
   '/courses/:id': function(id) {
-    if (Manuals.findOne(id)) {
+    var man = Manuals.findOne(id);
+    if (typeof man == 'object') {
       Session.set('currentManual', id);
       return 'course';
     } else {
-      document.location.href = '/';
+      Session.set('currentManual', null);
+      Meteor.Router.to('/');
+      return 'home';
     }
   },
   '/courses/:id/preview': function(id) {
