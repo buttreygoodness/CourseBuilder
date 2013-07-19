@@ -3,8 +3,12 @@
 Meteor.Router.add({
   '/': 'home',
   '/courses/:id': function(id) {
-    Session.set('currentManual', id);
-    return 'course';
+    if (Manuals.findOne(id)) {
+      Session.set('currentManual', id);
+      return 'course';
+    } else {
+      document.location.href = '/';
+    }
   },
   '/courses/:id/preview': function(id) {
     Session.set('currentManual', id);
