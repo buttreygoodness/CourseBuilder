@@ -10,12 +10,3 @@ accounts-base
 accounts-password
 showdown
 stylus
-standard-app-packages
-accounts-ui-bootstrap-dropdown
-bootstrap-wysiwyg
-font-awesome
-holder
-HTML5-History-API
-jquery-ui
-page-js-ie-support
-router
