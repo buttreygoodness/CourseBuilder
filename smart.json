@@ -2,9 +2,9 @@
   "packages": {
     "font-awesome": {},
     "router": {},
-    "accounts-ui-bootstrap-dropdown": {},
     "holder": {},
     "bootstrap-wysiwyg": {},
-    "jquery-ui": {}
+    "jquery-ui": {},
+    "accounts-ui-bootstrap-dropdown": {}
   }
 }
