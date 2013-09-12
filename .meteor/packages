@@ -5,8 +5,16 @@
 
 insecure
 preserve-inputs
-bootstrap
 accounts-base
 accounts-password
 showdown
 stylus
+standard-app-packages
+bootstrap-3
+font-awesome
+holder
+HTML5-History-API
+jquery-ui
+page-js-ie-support
+router
+accounts-ui-bootstrap-3
