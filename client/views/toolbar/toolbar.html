@@ -1,9 +1,16 @@
 <template name="toolbar">
   <div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-      <div class="container-fluid">
-        <a class="brand" href="/">AutomaticManual</a>
-        <ul class="nav">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">AutomaticManual</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
           <li><a href="/">Home</a></li>
           {{#if currentManual}}
             {{#with manual}}
@@ -15,8 +22,10 @@
             {{/with}}
           {{/if}}
         </ul>
-        {{loginButtons}}
-      </div>
+        <div class="nav navbar-right navbar-nav">
+          {{loginButtons}}
+        </div>
+      </div><!--/.navbar-collapse -->
     </div>
   </div>
 </template>
