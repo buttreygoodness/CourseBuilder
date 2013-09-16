@@ -9,11 +9,13 @@
       <div class="alert alert-error">{{error}}</div>
       {{/if}}
       
-      <input type="text" class="title span5" placeholder="Enter a section title">
+      <div class="col-lg-5">
+        <input type="text" class="title form-control" placeholder="Enter a section title">
+      </div>
       
       <div class="btn-group">
-        <button class="btn cancel">Cancel</button>
-        <button class="btn btn-primary save">Save</button>
+        <button type="button" class="btn btn-default cancel">Cancel</button>
+        <button type="button" class="btn btn-primary save">Save</button>
       </div>
     </form>
   </div>
@@ -30,11 +32,13 @@
       <div class="alert alert-error">{{error}}</div>
       {{/if}}
       
-      <input type="text" class="title span5" placeholder="Enter a section title" value="{{title}}">
+      <div class="col-lg-5">
+        <input type="text" class="title form-control" placeholder="Enter a section title" value="{{title}}">
+      </div>
       
       <div class="btn-group">
-        <button class="btn cancel">Cancel</button>
-        <button class="btn btn-primary save">Save</button>
+        <button type="button" class="btn btn-default cancel">Cancel</button>
+        <button type="button" class="btn btn-primary save">Save</button>
       </div>
     </form>
   </div>
