@@ -3,15 +3,17 @@
 <template name="createChapterDialogInline">
     
     <div class="editInline">
-      <form class="form-inline">
+      <form role="form">
         {{#if error}}
         <div class="alert alert-error">{{error}}</div>
         {{/if}}
-      
-        <input type="text" class="title span5" placeholder="Enter a chapter title">
+        
+        <div class="col-lg-5">
+          <input type="text" class="title form-control" placeholder="Enter a chapter title">
+        </div>
       
         <div class="btn-group">
-          <button class="btn cancel">Cancel</button>
+          <button class="btn btn-default cancel">Cancel</button>
           <button class="btn btn-primary save">Save</button>
         </div>
       </form>
@@ -24,15 +26,17 @@
 <template name="editChapterDialogInline">
   
   <div class="editInline">
-    <form class="form-inline">
+    <form class="form-inline" role="form">
       {{#if error}}
       <div class="alert alert-error">{{error}}</div>
       {{/if}}
       
-      <input type="text" class="title span5" placeholder="Enter a chapter title" value="{{title}}">
+      <div class="col-lg-5">
+        <input type="text" class="title form-control" placeholder="Enter a chapter title" value="{{title}}">
+      </div>
       
       <div class="btn-group">
-        <button class="btn cancel">Cancel</button>
+        <button class="btn btn-default cancel">Cancel</button>
         <button class="btn btn-primary save">Save</button>
       </div>
     </form>

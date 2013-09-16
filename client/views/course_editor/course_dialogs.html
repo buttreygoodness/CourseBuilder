@@ -2,22 +2,23 @@
 
 <template name="editCourseDialogInline">
   
-  <div class="inline-form">
-    {{#if error}}
-    <div class="alert alert-error">{{error}}</div>
-    {{/if}}
-    <div>
-      <input type="text" class="title span5" placeholder="Enter a course title" value="{{title}}">
-    </div>
-    <div id="name">
-      <textarea class="description span5" placeholder="Enter a description (optional)">{{description}}</textarea>
+  <form role="form">
+    
+    <div class="form-group">
+        <input type="text" class="title form-control" placeholder="Enter a course title" value="{{title}}">
     </div>
     
-  
-    <div class="btn-group">
-      <a href="#" class="btn cancel">Cancel</a>
-      <a href="#" class="btn btn-primary save">Save</a>
+    <div class="form-group">
+        <textarea class="description form-control" placeholder="Enter a description (optional)" rows="5">{{description}}</textarea>
     </div>
-  </div>
   
+    <div class="form-group">
+      <div class="btn-group">
+        <button type="button" class="btn btn-default cancel">Cancel</button>
+        <button type="button" class="btn btn-primary save">Save</button>
+      </div>
+    </div>
+    
+  </form>
+
 </template>
