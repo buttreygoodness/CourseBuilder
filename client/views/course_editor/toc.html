@@ -1,27 +1,23 @@
 <!-- toc_chapter -->
 
 <template name="toc_chapter">
-  <div class="accordion-group toc_chapter" data-id='{{_id}}' data-listposition='{{listposition}}'>
-    <div class="accordion-heading">
-      <!-- remove data-parent to prevent default toggle behavior -->
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="" href="#collapse{{_id}}" style="text-decoration: none;">
-        {{title}}
-        {{#if anySections}}
-        <div class="pull-right">
-          <i class="icon-chevron-sign-down"></i>
-        </div>
-        {{/if}}
-      </a> 
-    </div>
-    {{#if anySections}}
-    <div id="collapse{{_id}}" class="accordion-body collapse in">
-      <div class="accordion-inner">
-        {{#each sections}}
-          {{> toc_section}}
-        {{/each}}
+  <div class="panel-group toc_chapter" data-id='{{_id}}' data-listposition='{{listposition}}'>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="" href="#collapse{{_id}}" style="text-decoration: none;">{{title}}</a>
+        </h4>
       </div>
+      {{#if anySections}}
+      <div id="collapse{{_id}}" class="panel-collapse collapse in">
+        <div class="panel-body">
+          {{#each sections}}
+            {{> toc_section}}
+          {{/each}}
+        </div>
+      </div>
+      {{/if}}
     </div>
-    {{/if}}
   </div>
 </template>
 
